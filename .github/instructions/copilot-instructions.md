@@ -1,25 +1,62 @@
-# Copilot Instructions
+---
+applyTo: "**"
+---
 
-## Vert Builder Project Overview
+# VertBuilder Fitness App Setup and Structure Guidelines
 
-- **Overview:** This is a web app to build and track fitness plans for maintaining and increasing vertical feet of elevation achieved during walk, hike, trailrun, or backcountry ski activity. 
-  -  Users can create fitness plans by inputting a specific goal "event" elevation gain (e.g 4000 ft) and plan duration (e.g 16 weeks) along with current fitness parameters (i.e average vertical gain per week, average hours of activities per week) and desired aggresiveness of plan (i.e conservative, moderate, aggressive). 
-    - The aggresiveness of the plan is determined by the weekly increase in elevation gain and hours of activity. 
-  - Recovery weeks are also included in the plan and the pattern of build and recovery weeks can be customized (e.g recovery every other week, every fourth week) by the user. 
-    - Recovery weeks are defined as a week with a 40-60% decrease in elevation gain and can be adjusted as needed
-  - The app also provides a dashboard to view the planned elevation gain and hours of activity for each week of the plan and track progress towards the goal.
-  - Plan completion progress can be tracked over time manually and via integration with the Strava API.
-  
+## Explain the VertBuilder Planner and Tracker App goals and steps
+
+I want to build a VertBuilder Planner and Tracker app that will include the following:
+
+* User authentication and profiles
+* Fitness plan creation and customization
+* Activity logging and tracking
+* Strava API integration for automatic activity tracking
+* Progress dashboard with visualizations
+
+## Never change directories when agent mode is running commands
+
+- Never change directories
+- Instead point to the directory when issuing commands
+
+## Forwarded ports
+
+- 8000: public
+- 3000: public
+- 27017: private
+
+Do not propose any other ports to forward or to make public 
+
+## VertBuilder App structure
+
+The section defines the VertBuilder App's structure
+
+```text
+vert_builder/
+├── app/
+│   ├── services/
+|   ├── queries/
+|   ├── models/
+│   ├── serializers/
+│   ├── validators/
+│   ├──  controllers/api/v1/
+│   ├── tests/
+└── └─  frontend/
+      ├── entrypoints/
+      ├── components/
+      ├── hooks/
+      └── types/  
+```
 
 ## Tech stack in use
 
 ### Backend
 - Ruby on Rails and Postgres in a Docker container for the API and database.
 
-
 ### Frontend
-- React with TypeScript for the frontend.  The React app is built using Vite and uses Tailwind CSS for styling.  React Query is used for data fetching and state management, and shadcn/ui is used for UI components.
-
+- React with TypeScript for the frontend.  
+- The React app is built using Vite and uses Tailwind CSS for styling.  
+- React Query is used for data fetching and state management, and shadcn/ui is used for UI components.
 
 
 ## General Principles
