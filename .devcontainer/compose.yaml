@@ -5,6 +5,10 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+    ports:
+      - "3000:3000"  
+    environment:
+      - BINDING=0.0.0.0
 
     volumes:
     - ../../.:/workspaces/.:cached

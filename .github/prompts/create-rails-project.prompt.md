@@ -22,5 +22,17 @@ To create the Rails project follow these steps.
     --skip-asset-pipeline
     ``` 
 4. Confirm the docker container is running with the command `docker ps`. You should see a container for the Postgres database.
-5. Run `devcontainer up --workspace-folder .` to start the development container.
-6. run `bin/dev` to start the project. This will start the Rails server and the Postgres database in a Docker container.
+5. Update the .devcontainer/compose.yaml file to explicitly map port 3000 from the container to your machine, and tell Puma to listen on all network interfaces instead of just localhost, so Docker's port mapping can reach it. Add the following lines to the `rails-app` service in the `compose.yaml` file:
+    ```
+    rails-app:
+      build:
+        context: ..
+        dockerfile: .devcontainer/Dockerfile
+      ports:
+        - "3000:3000"  
+      environment:
+        - BINDING=0.0.0.0
+    ```
+6. Run `devcontainer up --workspace-folder .` to start the development container.
+7. Once the container is up, run `devcontainer exec --workspace-folder . -- bin/dev` to start the Rails server.
+8. You should now be able to access the Rails application by navigating to `http://localhost:3000` in your web browser. You should see the default Rails welcome page, confirming that the server is running correctly.
