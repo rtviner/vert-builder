@@ -22,7 +22,13 @@ module Authentication
     end
 
     def resume_session
-      Current.session ||= find_session_by_cookie
+      Current.session ||= find_session_by_token || find_session_by_cookie
+    end
+
+    def find_session_by_token
+      authenticate_with_http_token do |token, options|
+        Session.find_by(token: token)
+      end
     end
 
     def find_session_by_cookie
