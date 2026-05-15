@@ -24,3 +24,6 @@ generate_migration name *fields:
 
 generate_model name *fields:
     devcontainer exec --workspace-folder . bin/rails generate model {{name}} {{fields}}
+
+run_test file:
+    devcontainer exec --workspace-folder . bin/rails test {{file}}
