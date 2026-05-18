@@ -24,3 +24,11 @@ generate_migration name *fields:
 
 generate_model name *fields:
     devcontainer exec --workspace-folder . bin/rails generate model {{name}} {{fields}}
+
+generate_controller name *actions:
+    devcontainer exec --workspace-folder . bin/rails generate controller {{name}} {{actions}}
+
+destroy_generate type name:
+    devcontainer exec --workspace-folder . bin/rails destroy {{type}} {{name}}
+run_test file:
+    devcontainer exec --workspace-folder . bin/rails test {{file}}
