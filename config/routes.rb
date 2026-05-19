@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :session
       resources :passwords, param: :token
+      resources :registrations, only: %i[create]
     end
   end
 
