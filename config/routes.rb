@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :session
-      resources :passwords, param: :token
+      resources :passwords, only: %i[ update]
       resources :registrations, only: %i[create]
     end
   end
