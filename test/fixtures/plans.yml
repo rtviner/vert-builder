@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  parent: one
+  baseline_vertical_distance: 1
+  baseline_duration: 1
+  goal_vertical_distance: 1
+  goal_duration: 1
+  start_date: 2026-05-26
+  end_date: 2026-05-26
+  completed_date: 2026-05-26
+  flexible_end_date: false
+  recovery_pattern: 1
+  vertical_build_percentage: 1
+  status: 1
+
+two:
+  parent: two
+  baseline_vertical_distance: 1
+  baseline_duration: 1
+  goal_vertical_distance: 1
+  goal_duration: 1
+  start_date: 2026-05-26
+  end_date: 2026-05-26
+  completed_date: 2026-05-26
+  flexible_end_date: false
+  recovery_pattern: 1
+  vertical_build_percentage: 1
+  status: 1
