@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  child: one
+  week_number: 1
+  is_recovery: false
+  status: 1
+  start_date: 2026-05-26
+  end_date: 2026-05-26
+  planned_duration: 1
+  completed_duration: 1
+  planned_vertical_distance: 1
+  completed_vertical_distance: 1
+
+two:
+  child: two
+  week_number: 1
+  is_recovery: false
+  status: 1
+  start_date: 2026-05-26
+  end_date: 2026-05-26
+  planned_duration: 1
+  completed_duration: 1
+  planned_vertical_distance: 1
+  completed_vertical_distance: 1
