@@ -1,12 +1,13 @@
 # Model Generation Prompt
 
 ## Instructions
-- Run the rails migration generator command in the devcontainer (`devcontainer exec --workspace-folder . bin/rails generate model {{name}}`)for each model that needs to be created or updated, include the model name as `{{name}}`
+- Run the rails migration generator command in the devcontainer (`devcontainer exec --workspace-folder . bin/rails generate model {{name}}`)for each model that needs to be created, include the model name as `{{name}}`
 - create a new branch (git checkout -b) for each model creation with a descriptive name (e.g. `git checkout -b "create-plan-model"`) 
 - define columns, types, and default values directly in the model migration file for the relevant columns (e.g. `t.integer :baseline_vertical_distance, null: false, default: 0`), and add any necessary indexes (e.g. `add_index :weeks, [:plan_id, :week_number], unique: true`)
+- use attr_accessor and instance variables to avoid using self in the model methods and validations
 - add validations, and any scopes or methods described below to the model files at the appropriate time (the Week must be created to add the current_week scope to the Plan model)
-- use attr_accessor and instance variables to avoid using self in the model methods
 - update generated tests for each model, to cover any public methods, custom validations, anything at risk of regression.
+- use `just generate_migration name_of_migration` to generate a new migration file for any updates needed to existing models (e.g. adding associations or columns)
 - run the migrations using `just migrate` after all model files have been created, updated, and approved
 - Maintain the hierarchy: ensure the associations reflect this hierarchy (User has_many Plans, Plan belongs_to User, Plan has_many Weeks, Week belongs_to Plan, Week has_many Days, Day belongs_to Week)
 
@@ -39,7 +40,6 @@
 - validates: goal_vertical_distance, numericality: { greater_than: :baseline_vertical_distance }
 - validates: end_date_after_start_date, if: -> { start_date.present? && end_date.present? }
 
-
 ---
 
 ###: `Week`
@@ -67,21 +67,15 @@
 - validates: completed_duration, presence: true,numericality: { greater_than_or_equal_to: 0 }, if: -> { status == "completed" }
 **Scopes:**
 - completed_weeks: -> { where(status: :completed) }
-**Methods:**
-- complete!(completed_date: Date.today)
-  # sets status to completed, when the end_date is in the past, checks if any days in week are not marked completed and sets them to 'skipped'
-- log_week_progress
-  # user can update the completed_vertical_distance and completed_duration, calls complete! if it has not been called yet and end_date is in the past, otherwise just updates the completed_vertical_distance and completed_duration for the week without changing the status
 **indexes:**
 - unique index on [plan_id, week_number]
 ## Updates for Plan model once Week model is created:
-**Scopes** 
+**Plan Scopes** 
 - current_week: weeks.where(status: in_progress).first
-**Methods:** 
+**Plan Methods:** 
 - progress_percentage: calculate based on completed weeks and total weeks of the plan
 
 ---
-
 
 ### `Day`
 **Columns:**
@@ -104,6 +98,12 @@
   # sets status to skipped
   # marks updated_at date
   # triggers week completion check
+## Updates to Week model once Day model is created:
+**Week Methods:**
+- complete!(completed_date: Date.today)
+  # sets status to completed, when the end_date is in the past, checks if any days in week are not marked completed and sets them to 'skipped'
+- log_week_progress
+  # user can update the completed_vertical_distance and completed_duration, calls complete! if it has not been called yet and end_date is in the past, otherwise just updates the completed_vertical_distance and completed_duration for the week without changing the status
 
 ### `User` (already exists — update where neccessary)
 **Existing columns:** id, email_address, password_digest, created_at, updated_at
