@@ -10,9 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_13_213352) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_27_193444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "plans", force: :cascade do |t|
+    t.integer "baseline_duration", default: 0, null: false
+    t.integer "baseline_vertical_distance", default: 0, null: false
+    t.date "completed_date"
+    t.datetime "created_at", null: false
+    t.date "end_date"
+    t.boolean "flexible_end_date", default: false, null: false
+    t.integer "goal_duration", default: 0
+    t.integer "goal_vertical_distance", default: 0, null: false
+    t.integer "recovery_pattern", default: 0, null: false
+    t.date "start_date"
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.integer "vertical_build_percentage", default: 10, null: false
+    t.index ["user_id"], name: "index_plans_on_user_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.string "auth_token"
@@ -33,5 +51,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_13_213352) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "plans", "users"
   add_foreign_key "sessions", "users"
 end
