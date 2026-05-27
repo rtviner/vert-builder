@@ -9,8 +9,8 @@ console:
 migrate:
     devcontainer exec --workspace-folder . bin/rails db:migrate
 
-down:
-    docker compose -f .devcontainer/compose.yaml down
+down *flags:
+    docker compose -f .devcontainer/compose.yaml down {{flags}}
 
 #bin/rails generate migration CreateProducts name:string part_number:string
 # --> just generate_migration CreateProducts name:string part_number:string
