@@ -1,5 +1,6 @@
 class Week < ApplicationRecord
   belongs_to :plan
+  has_many :days, dependent: :destroy
 
   enum :status, { upcoming: 0, in_progress: 1, completed: 2 }
 
@@ -10,6 +11,15 @@ class Week < ApplicationRecord
   validate :end_date_after_start_date
 
   scope :completed_weeks, -> { where(status: :completed) }
+
+  def check_completion!
+    if end_date.past?
+      if days.where(status: :upcoming).exists?
+        days.where(status: :upcoming).find_each { |d| d.skip! }
+      end
+      completed!
+    end
+  end
 
   private
 

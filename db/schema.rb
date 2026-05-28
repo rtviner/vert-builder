@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_27_211539) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_28_183416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "days", force: :cascade do |t|
+    t.date "completed_date"
+    t.integer "completed_vertical_distance", default: 0
+    t.datetime "created_at", null: false
+    t.integer "planned_vertical_distance", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.string "strava_activity_id"
+    t.datetime "updated_at", null: false
+    t.bigint "week_id", null: false
+    t.index ["week_id"], name: "index_days_on_week_id"
+  end
 
   create_table "plans", force: :cascade do |t|
     t.integer "baseline_duration", default: 0, null: false
@@ -68,6 +80,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_211539) do
     t.index ["plan_id"], name: "index_weeks_on_plan_id"
   end
 
+  add_foreign_key "days", "weeks"
   add_foreign_key "plans", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "weeks", "plans"
