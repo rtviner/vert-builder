@@ -5,8 +5,8 @@ one:
   week_number: 1
   is_recovery: false
   status: 1
-  start_date: 2026-05-27
-  end_date: 2026-05-27
+  start_date: 2026-05-18
+  end_date: 2026-05-24
   planned_duration: 1
   completed_duration: 1
   planned_vertical_distance: 1
@@ -17,8 +17,8 @@ two:
   week_number: 1
   is_recovery: false
   status: 1
-  start_date: 2026-05-27
-  end_date: 2026-05-27
+  start_date: 2026-05-18
+  end_date: 2026-05-24
   planned_duration: 1
   completed_duration: 1
   planned_vertical_distance: 1
