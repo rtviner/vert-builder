@@ -1,5 +1,6 @@
 class Plan < ApplicationRecord
   belongs_to :user
+  has_many :weeks, dependent: :destroy
   MAX_BUILD_PERCENTAGE = 15.freeze
 
   enum :recovery_pattern, { every_other: 0, every_third: 1, every_fourth: 2 }
@@ -10,13 +11,12 @@ class Plan < ApplicationRecord
   validates :goal_vertical_distance, numericality: { greater_than: :baseline_vertical_distance }
   validate :end_date_after_start_date, if: -> { start_date.present? && end_date.present? }
 
-  # Use attr_accessor and instance variables for custom attributes if needed
+  scope :current_week, -> { joins(:weeks).merge(Week.in_progress).first }
 
-  # Placeholder for current_week scope (to be added after Week model)
-  # scope :current_week, -> { ... }
-
-  # Placeholder for progress_percentage method (to be added after Week model)
-  # def progress_percentage; end
+  def progress_percentage
+    return 0 if weeks.count == 0
+    ((weeks.completed_weeks.count.to_f / weeks.count) * 100).round
+  end
 
   private
 
