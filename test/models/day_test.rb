@@ -26,16 +26,20 @@ require "test_helper"
     assert_includes @day.errors[:status], "can't be blank"
   end
 
-  test "complete! sets status and completed_date" do
-    travel_to Time.zone.local(2026, 5, 28, 12, 0, 0) do
-      @day.complete!
-      assert_equal "completed", @day.status
-      assert_equal Date.today, @day.completed_date
-    end
+  test "complete! sets status and completed_date and calls week.check_completion!" do
+      travel_to Time.zone.local(2026, 5, 28, 12, 0, 0) do
+        @day.week = @week
+        @day.week.expects(:check_completion!).once
+        @day.complete!
+        assert_equal "completed", @day.status
+        assert_equal Date.today, @day.completed_date
+      end
   end
 
-  test "skip! sets status to skipped and updates updated_at" do
+  test "skip! sets status to skipped and updates updated_at and calls week.check_completion!" do
     travel_to Time.zone.local(2026, 5, 28, 12, 0, 0) do
+      @day.week = @week
+      @day.week.expects(:check_completion!).once
       @day.skip!
       assert_equal "skipped", @day.status
       assert_equal Time.zone.local(2026, 5, 28, 12, 0, 0), @day.updated_at
