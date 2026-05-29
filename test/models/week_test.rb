@@ -71,4 +71,26 @@ class WeekTest < ActiveSupport::TestCase
     )
     assert_includes Week.completed_weeks, completed
   end
+
+  test "check_completion! marks week as completed if end_date has passed and all days are completed or skipped" do
+    @week.save!
+    @week.days.create!(planned_vertical_distance: 1000, completed_vertical_distance: 1000, status: :completed)
+    @week.days.create!(planned_vertical_distance: 2000, completed_vertical_distance: 2000, status: :completed)
+    travel_to @week.end_date + 1 do
+      @week.check_completion!
+      assert @week.completed?
+    end
+  end
+
+  test "check_completion! skips upcoming days if end_date has passed" do
+    @week.save!
+    day1 = @week.days.create!(planned_vertical_distance: 1000, completed_vertical_distance: 0, status: :upcoming)
+    day2 = @week.days.create!(planned_vertical_distance: 2000, completed_vertical_distance: 0, status: :upcoming)
+    travel_to @week.end_date + 1 do
+      @week.check_completion!
+      assert day1.reload.skipped?
+      assert day2.reload.skipped?
+      assert @week.completed?
+    end
+  end
 end
