@@ -69,7 +69,7 @@ class WeekTest < ActiveSupport::TestCase
       planned_vertical_distance: 100,
       completed_vertical_distance: 100
     )
-    assert_includes Week.completed_weeks, completed
+    assert_includes Week.completed, completed
   end
 
   test "check_completion! marks week as completed if end_date has passed and all days are completed or skipped" do

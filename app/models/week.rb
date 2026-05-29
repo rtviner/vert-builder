@@ -10,7 +10,7 @@ class Week < ApplicationRecord
   validates :completed_duration, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { status == "completed" }
   validate :end_date_after_start_date
 
-  scope :completed_weeks, -> { where(status: :completed) }
+  scope :completed, -> { where(status: :completed) }
 
   def check_completion!
     if end_date.past?
