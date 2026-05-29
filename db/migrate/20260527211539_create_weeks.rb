@@ -14,6 +14,6 @@ class CreateWeeks < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    add_index :weeks, [:plan_id, :week_number], unique: true
+    add_index :weeks, [ :plan_id, :week_number ], unique: true
   end
 end
