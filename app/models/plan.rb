@@ -15,7 +15,7 @@ class Plan < ApplicationRecord
 
   def progress_percentage
     return 0 if weeks.count == 0
-    ((weeks.completed_weeks.count.to_f / weeks.count) * 100).round
+    ((weeks.completed.count.to_f / weeks.count) * 100).round
   end
 
   private
