@@ -11,6 +11,8 @@ class Week < ApplicationRecord
   validate :end_date_after_start_date
 
   scope :completed, -> { where(status: :completed) }
+  scope :recovery, -> { where(is_recovery: true) }
+  scope :progression, -> { where(is_recovery: false) }
 
   def check_completion!
     if end_date.past?
