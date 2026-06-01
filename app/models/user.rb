@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def average_weekly_vertical_distance
-    weeks = last_four_completed_build_weeks
+    weeks = last_four_completed_progression_weeks
     if weeks.count < 4
       return most_recent_plan&.baseline_vertical_distance || 0
     end
@@ -16,7 +16,7 @@ class User < ApplicationRecord
   end
 
   def average_weekly_duration
-    weeks = last_four_completed_build_weeks
+    weeks = last_four_completed_progression_weeks
     if weeks.count < 4
       return most_recent_plan&.baseline_duration || 0
     end
@@ -30,9 +30,9 @@ class User < ApplicationRecord
     plans.order(created_at: :desc).first
   end
 
-  def last_four_completed_build_weeks
+  def last_four_completed_progression_weeks
     Week.joins(:plan)
-    .where(plans: { user_id: id }, status: :completed, is_recovery: false)
+    .where(plans: { user_id: id }).merge(Week.progression.completed)
     .order(end_date: :desc)
     .limit(4)
   end
