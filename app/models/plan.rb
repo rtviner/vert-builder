@@ -8,7 +8,10 @@ class Plan < ApplicationRecord
 
   validates :baseline_vertical_distance, :baseline_duration, :goal_vertical_distance, :recovery_pattern, :vertical_build_percentage, :status, presence: true
   validates :vertical_build_percentage, numericality: { greater_than_or_equal_to: 5, less_than_or_equal_to: MAX_PROGRESSION_PERCENTAGE }
-  validates :goal_vertical_distance, numericality: { greater_than: :baseline_vertical_distance }
+  validates :baseline_vertical_distance, numericality: { greater_than: -1 }
+  validates :goal_vertical_distance,
+    numericality: { greater_than: :baseline_vertical_distance },
+    if: -> { baseline_vertical_distance.present? }
   validate :end_date_after_start_date, if: -> { start_date.present? && end_date.present? }
 
   scope :current_week, -> { joins(:weeks).merge(Week.in_progress).first }
