@@ -25,7 +25,9 @@ class PlanGenerator
   end
 
   def build_days(week)
-    # stub — implemented in Prompt 2
+    generated_days = DayGenerator.new().build_days(week, plan.goal_vertical_distance)
+    days.concat(generated_days)
+    generated_days
   end
 
   def save_all
