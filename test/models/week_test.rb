@@ -12,7 +12,8 @@ class WeekTest < ActiveSupport::TestCase
       planned_duration: 10,
       completed_duration: 0,
       planned_vertical_distance: 3000,
-      completed_vertical_distance: 0
+      completed_vertical_distance: 0,
+      category: "progression"
     )
   end
 
@@ -28,8 +29,10 @@ class WeekTest < ActiveSupport::TestCase
 
   test "week_number must be > 0" do
     @week.week_number = 0
+    @week.category = nil
     assert_not @week.valid?
     assert_includes @week.errors[:week_number], "must be greater than 0"
+    assert_includes @week.errors[:category], "can't be blank"
   end
 
   test "week_number must be unique within the same plan" do
@@ -67,7 +70,8 @@ class WeekTest < ActiveSupport::TestCase
       planned_duration: 10,
       completed_duration: 10,
       planned_vertical_distance: 100,
-      completed_vertical_distance: 100
+      completed_vertical_distance: 100,
+      category: "progression"
     )
     assert_includes Week.completed, completed
   end

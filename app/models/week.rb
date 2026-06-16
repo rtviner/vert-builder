@@ -2,6 +2,8 @@ class Week < ApplicationRecord
   belongs_to :plan
   has_many :days, dependent: :destroy
 
+  CATEGORY_OPTIONS = %w[progression recovery taper goal].freeze
+
   enum :status, { upcoming: 0, in_progress: 1, completed: 2 }
 
   validates :planned_vertical_distance, :planned_duration, :start_date, :end_date, :week_number, :status, presence: true
@@ -9,10 +11,11 @@ class Week < ApplicationRecord
   validates :completed_vertical_distance, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { status == "completed" }
   validates :completed_duration, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { status == "completed" }
   validate :end_date_after_start_date
+  validates :category, presence: true, inclusion: { in: CATEGORY_OPTIONS }
 
   scope :completed, -> { where(status: :completed) }
-  scope :recovery, -> { where(is_recovery: true) }
-  scope :progression, -> { where(is_recovery: false) }
+  scope :recovery, -> { where(category: %w[recovery taper]) }
+  scope :progression, -> { where(category: %w[progression goal]) }
 
   def check_completion!
     if end_date.past?

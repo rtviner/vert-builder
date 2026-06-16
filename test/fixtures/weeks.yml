@@ -11,6 +11,7 @@ one:
   completed_duration: 1
   planned_vertical_distance: 1
   completed_vertical_distance: 1
+  category: progression
 
 two:
   plan: two
@@ -23,3 +24,4 @@ two:
   completed_duration: 1
   planned_vertical_distance: 1
   completed_vertical_distance: 1
+  category: recovery
