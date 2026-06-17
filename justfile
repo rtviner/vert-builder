@@ -9,6 +9,9 @@ console:
 migrate:
     devcontainer exec --workspace-folder . bin/rails db:migrate
 
+load_fixtures:
+    devcontainer exec --workspace-folder . bin/rails db:fixtures:load
+
 down *flags:
     docker compose -f .devcontainer/compose.yaml down {{flags}}
 

@@ -3,23 +3,33 @@
 one:
   plan: one
   week_number: 1
-  is_recovery: false
   status: 1
   start_date: 2026-05-18
   end_date: 2026-05-24
-  planned_duration: 1
-  completed_duration: 1
-  planned_vertical_distance: 1
-  completed_vertical_distance: 1
+  planned_duration: 120
+  completed_duration: 120
+  planned_vertical_distance: 1000
+  completed_vertical_distance: 1000
   category: progression
 
 two:
   plan: two
   week_number: 1
-  is_recovery: false
   status: 1
   start_date: 2026-05-18
   end_date: 2026-05-24
+  planned_duration: 100
+  completed_duration: 100
+  planned_vertical_distance: 2000
+  completed_vertical_distance: 2000
+  category: progression
+
+three:
+  plan: two
+  week_number: 2
+  status: 1
+  start_date: 2026-05-25
+  end_date: 2026-05-31
   planned_duration: 1
   completed_duration: 1
   planned_vertical_distance: 1

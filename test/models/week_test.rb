@@ -5,7 +5,6 @@ class WeekTest < ActiveSupport::TestCase
     @week = Week.new(
       plan: @plan,
       week_number: 2,
-      is_recovery: false,
       status: :upcoming,
       start_date: Date.today,
       end_date: Date.today + 6,
@@ -63,7 +62,6 @@ class WeekTest < ActiveSupport::TestCase
     completed = Week.create!(
       plan: @plan,
       week_number: 2,
-      is_recovery: false,
       status: :completed,
       start_date: Date.today,
       end_date: Date.today + 6,
