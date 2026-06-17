@@ -23,7 +23,8 @@ class UserTest < ActiveSupport::TestCase
         start_date: start_date,
         end_date: start_date + 6,
         status: :completed,
-        completed_vertical_distance: 1000 + i * 100
+        completed_vertical_distance: 1000 + i * 100,
+        category: "progression"
       )
     end
 
@@ -48,7 +49,8 @@ class UserTest < ActiveSupport::TestCase
         start_date: start_date,
         end_date: start_date + 6,
         status: :completed,
-        completed_duration: 120 + i * 10
+        completed_duration: 120 + i * 10,
+        category: "progression"
       )
     end
 

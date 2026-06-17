@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_28_183416) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_17_202037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -64,11 +64,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_28_183416) do
   end
 
   create_table "weeks", force: :cascade do |t|
+    t.string "category"
     t.integer "completed_duration", default: 0, null: false
     t.integer "completed_vertical_distance", default: 0, null: false
     t.datetime "created_at", null: false
     t.date "end_date", null: false
-    t.boolean "is_recovery", default: false, null: false
     t.bigint "plan_id", null: false
     t.integer "planned_duration", default: 0, null: false
     t.integer "planned_vertical_distance", default: 0, null: false
