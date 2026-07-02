@@ -88,7 +88,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "build_days generates seven days with expected ordering for low, mid, and high progression week totals" do
     scenarios = [
-      { week_vert: 1_510, label: "low" },
+      { week_vert: 1260, label: "low" },
       { week_vert: 6_020, label: "mid" },
       { week_vert: 15_010, label: "high" }
     ]
@@ -124,7 +124,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "build_days generates seven days with expected ordering for low, mid, and high recovery week totals" do
     scenarios = [
-      { week_vert: 990.0, label: "low" },
+      { week_vert: 790.0, label: "low" },
       { week_vert: 4_520.0, label: "mid" },
       { week_vert: 9_010.0, label: "high" }
     ]
