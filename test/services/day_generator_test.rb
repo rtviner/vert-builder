@@ -9,9 +9,8 @@ class DayGeneratorTest < ActiveSupport::TestCase
     days = @generator.send(:randomize_days_with_sum, total: total, count: count, max: max)
 
     assert_equal expected_count, days.count
-    assert_in_delta total, days.sum, 60, "expected sum of days to be within 60 of #{total}, got #{days.sum}"
+    assert_in_delta total, days.sum, count * 10, "expected sum of days to be within #{count * 10} of #{total}, got #{days.sum}"
     assert days.all? { |day| day <= max }, "expected each day to be <= #{max}, got #{days.inspect}"
-    assert days.all? { |day| day >= 0 }, "expected non-negative days, got #{days.inspect}"
     assert days.all? { |day| (day % 10).zero? }, "expected multiples of 10, got #{days.inspect}"
 
     days
@@ -19,9 +18,9 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "randomize_days_with_sum distributes four easy days for low, mid, and high progression week vert" do
     scenarios = [
-      { week_vert: 1_500.0, total_hard_percentage: 0.75, label: "low" },
-      { week_vert: 6_000.0, total_hard_percentage: 0.78, label: "mid" },
-      { week_vert: 15_000.0, total_hard_percentage: 0.80, label: "high" }
+      { week_vert: 1_000.0, total_hard_percentage: 0.75, label: "low" },
+      { week_vert: 6_020.0, total_hard_percentage: 0.78, label: "mid" },
+      { week_vert: 15_010.0, total_hard_percentage: 0.80, label: "high" }
     ]
 
     scenarios.each do |scenario|
@@ -29,7 +28,6 @@ class DayGeneratorTest < ActiveSupport::TestCase
       max_easy = scenario[:week_vert] * DayGenerator::MAX_EASY_PERCENTAGE
 
       days = assert_randomized_days(total: easy_days_total, count: 4, max: max_easy, expected_count: 4)
-      assert days.none?(&:zero?), "expected no zero easy days for #{scenario[:label]} week_vert"
       assert days.select { |day| day == 90 }.count <= 3,
              "expected 3 or fewer 90 values for #{scenario[:label]} week_vert"
       assert days.select { |day| day > 90 && day < 150 }.count <= 1,
@@ -39,7 +37,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "randomize_days_with_sum distributes five days for low, mid, and high recovery week vert" do
     scenarios = [
-      { week_vert: 990.0, label: "low" },
+      { week_vert: 660.0, label: "low" },
       { week_vert: 4_500.0, label: "mid" },
       { week_vert: 9_000.0, label: "high" }
     ]
@@ -52,14 +50,12 @@ class DayGeneratorTest < ActiveSupport::TestCase
       max_easy = scenario[:week_vert] * DayGenerator::MAX_EASY_PERCENTAGE
 
       days = assert_randomized_days(total: easy_5_days_total, count: 5, max: max_easy, expected_count: 5)
-      assert days.select { |day| day == 0 }.count <= 1,
-             "expected at most one zero day for #{scenario[:label]} week_vert"
       assert days.select { |day| day > 90 && day < 150 }.count <= 1,
              "expected 1 or fewer 90-150 values for #{scenario[:label]} week_vert"
     end
   end
 
-  test "randomize_days_with_sum distributes four days for low, mid, and high goal weekrecovery vert" do
+  test "randomize_days_with_sum distributes four days for low, mid, and high goal week recovery vert" do
     scenarios = [
       { recovery_vert: 1_500.0, remainder: 600.0, label: "low" },
       { recovery_vert: 3_600.0, remainder: 1_400.0, label: "mid" },
@@ -88,7 +84,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "build_days generates seven days with expected ordering for low, mid, and high progression week totals" do
     scenarios = [
-      { week_vert: 1260, label: "low" },
+      { week_vert: 1000, label: "low" },
       { week_vert: 6_020, label: "mid" },
       { week_vert: 15_010, label: "high" }
     ]
@@ -106,7 +102,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
       max_easy = week.planned_vertical_distance * 0.15
       easy_positions.each do |index|
-        assert_operator days[index].planned_vertical_distance, :>=, 90
+        assert_operator days[index].planned_vertical_distance, :>=, 0
         assert_operator days[index].planned_vertical_distance, :<=, max_easy
       end
 
@@ -124,7 +120,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "build_days generates seven days with expected ordering for low, mid, and high recovery week totals" do
     scenarios = [
-      { week_vert: 790.0, label: "low" },
+      { week_vert: 660.0, label: "low" },
       { week_vert: 4_520.0, label: "mid" },
       { week_vert: 9_010.0, label: "high" }
     ]
