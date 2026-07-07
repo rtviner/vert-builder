@@ -58,7 +58,7 @@ class DayGenerator
     true
   end
 
-  STEP_DOWN_TIERS = [ STEP_300_UNITS, STEP_200_UNITS, STEP_150_UNITS, STEP_90_UNITS ].freeze
+  STEP_DOWN_TIERS = [ STEP_300_UNITS, STEP_200_UNITS, STEP_150_UNITS, STEP_90_UNITS, 0 ].freeze
 
   def step_down_to_balance(units, baseline_units, remaining_units)
     tiers = STEP_DOWN_TIERS.select { |tier| tier < baseline_units }
@@ -86,22 +86,10 @@ class DayGenerator
     baseline_units = calculate_baseline_units(total, count)
 
     units = Array.new(count, baseline_units)
-    remaining_units = total_units - baseline_units * count
+    remaining_units = total_units - (baseline_units * count)
 
     # Step down pass: walk down through all step tiers until remaining_units >= 0
     remaining_units =  step_down_to_balance(units, baseline_units, remaining_units) unless remaining_units >= 0
-
-    # Step down pass 2: 150 → 90 (only for count >= 4, max one 90 day)
-    if remaining_units < 0 && count >= 4
-        step_down_unit(units, from: STEP_150_UNITS, to: STEP_90_UNITS)
-        remaining_units += (STEP_150_UNITS - STEP_90_UNITS)
-    end
-
-    # Step down pass 3: 90 → 0 (only for count >= 5, last resort, max one zero day)
-    if remaining_units < 0 && count >= 5
-        step_down_unit(units, from: STEP_90_UNITS, to: 0)
-        remaining_units += STEP_90_UNITS
-    end
 
     # Step up: only items at 150 or above, never touch 90 or 0
     while remaining_units > 0
@@ -117,14 +105,18 @@ class DayGenerator
     # Fallback: allow one 90 to absorb remainder if it lands in the 90-150 gap
     # zero days are never touched
     if remaining_units > 0
-      candidates = units.each_index.select { |i| units[i] == STEP_90_UNITS }
+      candidates = units.each_index.select { |i| units[i] == STEP_90_UNITS && units[i] < max_units }
       unless candidates.empty?
-        units[candidates.sample] += remaining_units
-        remaining_units = 0
+        idx = candidates.sample
+        step = [ remaining_units, max_units - units[idx] ].min
+        units[idx] += step
+        remaining_units -= step
       end
     end
 
-    raise ArgumentError, "could not distribute total #{total} across #{count} items" if remaining_units != 0
+    if remaining_units > count || remaining_units < -count
+      raise ArgumentError, "could not distribute total #{total} across #{count} items"
+    end
 
     units.shuffle.map { |unit| unit * 10 }
   end
