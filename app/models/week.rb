@@ -4,15 +4,36 @@ class Week < ApplicationRecord
 
   CATEGORY_OPTIONS = %w[progression recovery taper goal].freeze
 
-  enum :status, { upcoming: 0, in_progress: 1, completed: 2 }
+  enum :status, { planned: 0, upcoming: 1, in_progress: 2, completed: 3 }
 
-  validates :planned_vertical_distance, :planned_duration, :start_date, :end_date, :week_number, :status, presence: true
+  validates :planned_vertical_distance, :week_number, :status, :category, presence: true
+  validates :planned_duration, presence: true, unless: -> { category == "goal" }
+  validates :start_date, :end_date, presence: true, unless: -> { planned? }
   validates :week_number, numericality: { greater_than: 0 }, uniqueness: { scope: :plan_id }
-  validates :completed_vertical_distance, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { status == "completed" }
-  validates :completed_duration, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { status == "completed" }
-  validate :end_date_after_start_date
-  validates :category, presence: true, inclusion: { in: CATEGORY_OPTIONS }
-
+  validates :completed_vertical_distance, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { completed? }
+  validates :completed_duration, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: -> { completed? }
+  validate :end_date_after_start_date, if: -> { start_date.present? && end_date.present? }
+  validates :category, inclusion: { in: CATEGORY_OPTIONS }
+  validates :recovery_reduction_percentage,
+            presence: true,
+            numericality: {
+              only_integer: true,
+              greater_than_or_equal_to: 40,
+              less_than_or_equal_to: 60
+            },
+            if: -> { category.in?(%w[recovery taper]) }
+  validates :recovery_reduction_percentage,
+            presence: true,
+            numericality: { equal_to: 60 },
+            if: -> { category == "goal" }
+  validates :vertical_build_percentage,
+            presence: true,
+            numericality: {
+              greater_than_or_equal_to: 5,
+              less_than: Plan::MAX_PROGRESSION_PERCENTAGE
+            },
+            if: -> { category == "progression" }
+  # completed here is redundant because Week.completed? remove?
   scope :completed, -> { where(status: :completed) }
   scope :recovery, -> { where(category: %w[recovery taper]) }
   scope :progression, -> { where(category: %w[progression goal]) }
