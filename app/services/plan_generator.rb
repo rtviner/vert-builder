@@ -12,23 +12,18 @@ class PlanGenerator
   end
 
   def call
-    build_weeks
+    @weeks = WeekGenerator.new(plan).build_weeks
+
+    @weeks.each do |week|
+      days.concat(DayGenerator.new.build_days(week, plan.goal_vertical_distance))
+    end
+
     save_all
   end
 
   private
 
   attr_reader :plan, :weeks, :days
-
-  def build_weeks
-    # stub — implemented in Prompt 3
-  end
-
-  def build_days(week)
-    generated_days = DayGenerator.new().build_days(week, plan.goal_vertical_distance)
-    days.concat(generated_days)
-    generated_days
-  end
 
   def save_all
     ActiveRecord::Base.transaction do
