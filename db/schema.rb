@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_17_202037) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_14_123000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,13 +68,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_17_202037) do
     t.integer "completed_duration", default: 0, null: false
     t.integer "completed_vertical_distance", default: 0, null: false
     t.datetime "created_at", null: false
-    t.date "end_date", null: false
+    t.date "end_date"
     t.bigint "plan_id", null: false
-    t.integer "planned_duration", default: 0, null: false
+    t.integer "planned_duration"
     t.integer "planned_vertical_distance", default: 0, null: false
-    t.date "start_date", null: false
+    t.integer "recovery_reduction_percentage"
+    t.date "start_date"
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.integer "vertical_build_percentage"
     t.integer "week_number", null: false
     t.index ["plan_id", "week_number"], name: "index_weeks_on_plan_id_and_week_number", unique: true
     t.index ["plan_id"], name: "index_weeks_on_plan_id"
