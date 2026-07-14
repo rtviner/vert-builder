@@ -7,7 +7,7 @@ class Plan < ApplicationRecord
   enum :status, { planned: 0, active: 1, completed: 2, abandoned: 3 }
 
   validates :baseline_vertical_distance, :baseline_duration, :goal_vertical_distance, :recovery_pattern, :vertical_build_percentage, :status, presence: true
-  validates :vertical_build_percentage, numericality: { greater_than_or_equal_to: 5, less_than_or_equal_to: MAX_PROGRESSION_PERCENTAGE }
+  validates :vertical_build_percentage, numericality: { greater_than_or_equal_to: 5, less_than: MAX_PROGRESSION_PERCENTAGE }
   validates :baseline_vertical_distance, numericality: { greater_than: -1 }
   validates :goal_vertical_distance,
     numericality: { greater_than: :baseline_vertical_distance },
