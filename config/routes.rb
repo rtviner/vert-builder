@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      resources :plans, only: %i[create]
       resource :session
       resources :passwords, only: %i[ update]
       resources :registrations, only: %i[create]
