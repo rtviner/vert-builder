@@ -17,6 +17,28 @@ class PlanGeneratorTest < ActiveSupport::TestCase
     @generator = PlanGenerator.new(@plan)
   end
 
+  def build_week(week_number:, end_date:)
+    Week.new(
+      plan: @plan,
+      week_number: week_number,
+      planned_vertical_distance: 2000,
+      planned_duration: 100,
+      category: "progression",
+      status: :planned,
+      recovery_reduction_percentage: nil,
+      vertical_build_percentage: 10,
+      end_date: end_date
+    )
+  end
+
+  def build_day(week)
+    Day.new(
+      week: week,
+      planned_vertical_distance: 100,
+      status: :upcoming
+    )
+  end
+
   test "returns a PlanResult" do
     result = @generator.call
     assert_instance_of PlanGenerator::PlanResult, result
@@ -52,21 +74,28 @@ class PlanGeneratorTest < ActiveSupport::TestCase
     assert result.plan.errors[:baseline_vertical_distance].present?
   end
 
-  # these tests depend on week generation, which is not implemented yet — to be added in Prompt 3
+  test "delegates week and day generation and persists the generated records" do
+    week_one = build_week(week_number: 1, end_date: Date.today + 6.days)
+    week_two = build_week(week_number: 2, end_date: Date.today + 13.days)
+    day_one = build_day(week_one)
+    day_two = build_day(week_one)
+    day_three = build_day(week_two)
 
-  # test "sets plan end_date after saving when flexible_end_date is true" do
-  #   @plan.flexible_end_date = true
-  #   result = @generator.call
-  #   assert result.plan.end_date.present?
-  # end
+    week_generator = mock("week_generator")
+    week_generator.expects(:build_weeks).returns([ week_one, week_two ])
+    WeekGenerator.stubs(:new).with(@plan).returns(week_generator)
 
-  # test "does not set plan end_date when flexible_end_date is false" do
-  #   @plan.flexible_end_date = false
-  #   @plan.end_date = Date.today + 90.days
-  #   result = @generator.call
+    day_generator = mock("day_generator")
+    day_generator.expects(:build_days).with(week_one, @plan.goal_vertical_distance).returns([ day_one, day_two ])
+    day_generator.expects(:build_days).with(week_two, @plan.goal_vertical_distance).returns([ day_three ])
+    DayGenerator.stubs(:new).returns(day_generator)
 
-  #   assert_equal Date.today + 90.days, result.plan.end_date
-  # end
+    result = @generator.call
+
+    assert result.success?
+    assert_equal [ week_one, week_two ], @plan.weeks.to_a
+    assert_equal [ day_one, day_two, day_three ], @plan.weeks.flat_map(&:days).sort_by(&:id)
+  end
 
   test "rolls back all records if plan save fails" do
     assert_no_difference [ "Plan.count", "Week.count", "Day.count" ] do

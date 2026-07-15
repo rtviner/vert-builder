@@ -12,7 +12,8 @@ class WeekTest < ActiveSupport::TestCase
       completed_duration: 0,
       planned_vertical_distance: 3000,
       completed_vertical_distance: 0,
-      category: "progression"
+      category: "progression",
+      vertical_build_percentage: 10
     )
   end
 
@@ -21,9 +22,16 @@ class WeekTest < ActiveSupport::TestCase
   end
 
   test "invalid without required fields" do
-    @week.start_date = nil
+    @week.planned_vertical_distance = nil
     assert_not @week.valid?
-    assert_includes @week.errors[:start_date], "can't be blank"
+    assert_includes @week.errors[:planned_vertical_distance], "can't be blank"
+  end
+
+  test "start date and end date are not required if the week is planned" do
+    @week.status = :planned
+    @week.start_date = nil
+    @week.end_date = nil
+    assert @week.valid?
   end
 
   test "week_number must be > 0" do
@@ -69,7 +77,8 @@ class WeekTest < ActiveSupport::TestCase
       completed_duration: 10,
       planned_vertical_distance: 100,
       completed_vertical_distance: 100,
-      category: "progression"
+      category: "progression",
+      vertical_build_percentage: 10
     )
     assert_includes Week.completed, completed
   end
