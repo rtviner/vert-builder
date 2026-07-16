@@ -2,8 +2,8 @@
 
 one:
   user: one
-  baseline_vertical_distance: 100
-  baseline_duration: 30
+  baseline_vertical_distance: 2000
+  baseline_duration: 300
   goal_vertical_distance: 5000
   goal_duration: 250
   vertical_build_percentage: 10
@@ -11,10 +11,9 @@ one:
 
 two:
   user: two
-  baseline_vertical_distance: 150
-  baseline_duration: 45
+  baseline_vertical_distance: 1500
+  baseline_duration: 380
   goal_vertical_distance: 3300
-  goal_duration: 150
   recovery_pattern: every_third
   vertical_build_percentage: 12
-  status: active
+  status: planned

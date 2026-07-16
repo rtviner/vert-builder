@@ -30,10 +30,16 @@ class WeekGeneratorTest < ActiveSupport::TestCase
     assert plan.errors[:baseline_vertical_distance].include?("must be greater than or equal to #{Plan::MINIMUM_BASELINE_VERT}")
   end
 
-  test "generates a minimum of 5 weeks" do
+  test "generates a minimum of 5 weeks for every other recovery pattern" do
     weeks = generator(build_plan).build_weeks
 
     assert_operator weeks.count, :>=, 5
+  end
+
+  test "generates a minimum of 4 weeks for every third or fourth recovery pattern" do
+    weeks = generator(plans(:two)).build_weeks
+
+    assert_operator weeks.count, :>=, 4
   end
 
   test "second to last week is taper and last week is goal" do
