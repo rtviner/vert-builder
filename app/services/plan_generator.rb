@@ -14,11 +14,18 @@ class PlanGenerator
   def call
     @weeks = WeekGenerator.new(plan).build_weeks
 
+    if @weeks.empty?
+      return PlanResult.new(false, plan)
+    end
+
     @weeks.each do |week|
       days.concat(DayGenerator.new.build_days(week, plan.goal_vertical_distance))
     end
 
     save_all
+  rescue ArgumentError => e
+    plan.errors.add(:base, "Day generation failed: #{e.message}")
+    PlanResult.new(false, plan)
   end
 
   private

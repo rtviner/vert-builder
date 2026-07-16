@@ -14,5 +14,12 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    def auth_headers(user)
+      token = user.sessions.create!(
+        ip_address: "127.0.0.1",
+        user_agent: "TestAgent"
+      ).auth_token
+      { "Authorization" => "Bearer #{token}" }
+    end
   end
 end
