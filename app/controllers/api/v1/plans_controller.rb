@@ -5,7 +5,7 @@ class Api::V1::PlansController < ApplicationController
     if result.success?
       render json: plan, status: :created
     else
-      render json: { errors: plan.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: result.plan.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
