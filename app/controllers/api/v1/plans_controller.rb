@@ -9,6 +9,11 @@ class Api::V1::PlansController < ApplicationController
     end
   end
 
+  def index
+    plans = params[:status] == "activated" ? Current.user.plans.active : Current.user.plans.all
+    render json: plans, status: :ok
+  end
+
   private
 
   def plan_params
