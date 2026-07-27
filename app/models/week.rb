@@ -33,8 +33,7 @@ class Week < ApplicationRecord
               less_than: Plan::MAX_PROGRESSION_PERCENTAGE
             },
             if: -> { category == "progression" }
-  # completed here is redundant because Week.completed? remove?
-  scope :completed, -> { where(status: :completed) }
+
   scope :recovery, -> { where(category: %w[recovery taper]) }
   scope :progression, -> { where(category: %w[progression goal]) }
 
