@@ -1,6 +1,6 @@
 class Plan < ApplicationRecord
   belongs_to :user
-  has_many :weeks, dependent: :destroy
+  has_many :weeks, -> { order(:week_number) }, dependent: :destroy
   MAX_PROGRESSION_PERCENTAGE = 15.freeze
   MINIMUM_BASELINE_VERT = 1000.freeze
 
