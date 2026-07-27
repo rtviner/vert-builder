@@ -1,7 +1,7 @@
 require "test_helper"
  class DayTest < ActiveSupport::TestCase
   setup do
-    @week = weeks(:one)
+    @week = weeks(:week_one_user_one_active)
     @day = Day.new(
       week: @week,
       planned_vertical_distance: 1000,

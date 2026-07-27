@@ -1,10 +1,10 @@
 require "test_helper"
 class WeekTest < ActiveSupport::TestCase
   setup do
-    @plan = plans(:one)
+    @plan = plans(:user_one_planned)
     @week = Week.new(
       plan: @plan,
-      week_number: 2,
+      week_number: 1,
       status: :upcoming,
       start_date: Date.today,
       end_date: Date.today + 6,
@@ -43,9 +43,9 @@ class WeekTest < ActiveSupport::TestCase
   end
 
   test "week_number must be unique within the same plan" do
+    @week.save!
     duplicate_week = @week.dup
     duplicate_week.week_number = 1
-    duplicate_week.save
     assert_not duplicate_week.valid?
     assert_includes duplicate_week.errors[:week_number], "has already been taken"
   end

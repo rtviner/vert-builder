@@ -37,7 +37,7 @@ class WeekGeneratorTest < ActiveSupport::TestCase
   end
 
   test "generates a minimum of 4 weeks for every third or fourth recovery pattern" do
-    weeks = generator(plans(:two)).build_weeks
+    weeks = generator(plans(:user_two_planned)).build_weeks
 
     assert_operator weeks.count, :>=, 4
   end

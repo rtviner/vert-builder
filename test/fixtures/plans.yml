@@ -1,6 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+user_one_planned:
   user: one
   baseline_vertical_distance: 2000
   baseline_duration: 300
@@ -9,7 +9,34 @@ one:
   vertical_build_percentage: 10
   status: planned
 
-two:
+user_one_active:
+  user: one
+  baseline_vertical_distance: 2000
+  baseline_duration: 300
+  goal_vertical_distance: 5000
+  goal_duration: 250
+  vertical_build_percentage: 10
+  status: active
+
+user_one_completed:
+  user: one
+  baseline_vertical_distance: 2000
+  baseline_duration: 300
+  goal_vertical_distance: 5000
+  goal_duration: 250
+  vertical_build_percentage: 10
+  status: completed
+
+user_one_abandoned:
+  user: one
+  baseline_vertical_distance: 2000
+  baseline_duration: 300
+  goal_vertical_distance: 5000
+  goal_duration: 250
+  vertical_build_percentage: 10
+  status: abandoned
+
+user_two_planned:
   user: two
   baseline_vertical_distance: 1500
   baseline_duration: 380
@@ -17,3 +44,20 @@ two:
   recovery_pattern: every_third
   vertical_build_percentage: 12
   status: planned
+
+user_two_active:
+  user: two
+  baseline_vertical_distance: 1500
+  baseline_duration: 380
+  goal_vertical_distance: 3300
+  vertical_build_percentage: 10
+  status: active
+
+user_two_completed:
+  user: two
+  baseline_vertical_distance: 1500
+  baseline_duration: 380
+  goal_vertical_distance: 3300
+  recovery_pattern: every_third
+  vertical_build_percentage: 12
+  status: active
