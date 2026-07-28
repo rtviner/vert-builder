@@ -1,6 +1,6 @@
 class Week < ApplicationRecord
   belongs_to :plan
-  has_many :days, dependent: :destroy
+  has_many :days, -> { order(:position) }, dependent: :destroy
 
   CATEGORY_OPTIONS = %w[progression recovery taper goal].freeze
 
