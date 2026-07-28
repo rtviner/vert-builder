@@ -19,6 +19,15 @@ class Plan < ApplicationRecord
 
   scope :current_week, -> { joins(:weeks).merge(Week.in_progress).first }
 
+  def week_count
+    weeks.count
+  end
+
+  def current_week_number
+    return nil unless active? && weeks.in_progress.present?
+    weeks.in_progress.first.week_number
+  end
+
   def progress_percentage
     return 0 if weeks.count == 0
     ((weeks.completed.count.to_f / weeks.count) * 100).round

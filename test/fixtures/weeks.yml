@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  plan: one
+week_one_user_one_active:
+  plan: user_one_active
   week_number: 1
   status: 1
   start_date: 2026-05-18
@@ -12,26 +12,135 @@ one:
   completed_vertical_distance: 1000
   category: progression
 
-two:
-  plan: two
+week_one_user_two_active:
+  plan: user_two_active
   week_number: 1
-  status: 1
-  start_date: 2026-05-18
-  end_date: 2026-05-24
-  planned_duration: 100
-  completed_duration: 100
-  planned_vertical_distance: 2000
-  completed_vertical_distance: 2000
+  status: 3
+  start_date: 2026-05-11
+  end_date: 2026-05-17
+  planned_duration: 430
+  completed_duration: 231
+  planned_vertical_distance: 2162
+  completed_vertical_distance: 1327
   category: progression
 
-three:
-  plan: two
+week_two_user_two_active:
+  plan: user_two_active
   week_number: 2
-  status: 1
+  status: 3
+  start_date: 2026-05-18
+  end_date: 2026-05-24
+  planned_duration: 258
+  completed_duration: 349
+  planned_vertical_distance: 1297
+  completed_vertical_distance: 1421
+  category: recovery
+
+week_three_user_two_active:
+  plan: user_two_active
+  week_number: 3
+  status: 3
   start_date: 2026-05-25
   end_date: 2026-05-31
-  planned_duration: 1
-  completed_duration: 1
-  planned_vertical_distance: 1
-  completed_vertical_distance: 1
+  planned_duration: 430
+  completed_duration: 413
+  planned_vertical_distance: 2270
+  completed_vertical_distance: 2269
+  category: progression
+
+week_four_user_two_active:
+  plan: user_two_active
+  week_number: 4
+  status: 3
+  start_date: 2026-06-01
+  end_date: 2026-06-07
+  planned_duration: 258
+  completed_duration: 309
+  planned_vertical_distance: 1297
+  completed_vertical_distance: 1333
   category: recovery
+
+week_five_user_two_active:
+  plan: user_two_active
+  week_number: 5
+  status: 3
+  start_date: 2026-06-08
+  end_date: 2026-06-14
+  planned_duration: 462
+  completed_duration: 415
+  planned_vertical_distance: 2378
+  completed_vertical_distance: 2267
+  category: progression
+
+week_six_user_two_active:
+  plan: user_two_active
+  week_number: 6
+  status: 3
+  start_date: 2026-06-15
+  end_date: 2026-06-21
+  planned_duration: 274
+  completed_duration: 280
+  planned_vertical_distance: 1427
+  completed_vertical_distance: 1384
+  category: recovery
+
+week_seven_user_two_active:
+  plan: user_two_active
+  week_number: 7
+  status: 3
+  start_date: 2026-06-22
+  end_date: 2026-06-28
+  planned_duration: 504
+  completed_duration: 377
+  planned_vertical_distance: 2616
+  completed_vertical_distance: 2668
+  category: progression
+
+week_eight_user_two_active:
+  plan: user_two_active
+  week_number: 8
+  status: 3
+  start_date: 2026-06-29
+  end_date: 2026-07-05
+  planned_duration: 302
+  completed_duration: 342
+  planned_vertical_distance: 1570
+  completed_vertical_distance: 1452
+  category: recovery
+
+week_nine_user_two_active:
+  plan: user_two_active
+  week_number: 9
+  status: 2
+  start_date: 2026-07-06
+  end_date: 2026-07-12
+  planned_duration: 529
+  completed_duration: 0
+  planned_vertical_distance: 2878
+  completed_vertical_distance: 0
+  category: progression
+
+week_ten_user_two_active:
+  plan: user_two_active
+  week_number: 10
+  status: 1
+  start_date: 2026-07-13
+  end_date: 2026-07-19
+  planned_duration: 318
+  completed_duration: 0
+  planned_vertical_distance: 1727
+  completed_vertical_distance: 0
+  category: recovery
+
+week_eleven_user_two_active:
+  plan: user_two_active
+  week_number: 11
+  status: 0
+  start_date: 2026-07-20
+  end_date: 2026-07-26
+  planned_duration: 554
+  completed_duration: 0
+  planned_vertical_distance: 3166
+  completed_vertical_distance: 0
+  category: progression
+  

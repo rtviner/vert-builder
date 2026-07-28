@@ -1,17 +1,644 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  week: one
+day_one_week_one_user_one_active:
+  week: week_one_user_one_active
   planned_vertical_distance: 1
   completed_vertical_distance: 1
   completed_date: 2026-05-28
   strava_activity_id: MyString
   status: 1
 
-two:
-  week: two
+day_two_week_one_user_one_active:
+  week: week_one_user_one_active
   planned_vertical_distance: 1
   completed_vertical_distance: 1
   completed_date: 2026-05-28
   strava_activity_id: MyString
   status: 1
+
+# --- WEEK 1 ---
+day_one_week_one_user_two_active:
+  week: week_one_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-05-11
+  strava_activity_id: MyString
+  status: 2
+
+day_two_week_one_user_two_active:
+  week: week_one_user_two_active
+  planned_vertical_distance: 450
+  completed_vertical_distance: 0
+  completed_date: 2026-05-12
+  strava_activity_id: MyString
+  status: 2
+
+day_three_week_one_user_two_active:
+  week: week_one_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 0
+  completed_date: 2026-05-13
+  strava_activity_id: MyString
+  status: 2
+
+day_four_week_one_user_two_active:
+  week: week_one_user_two_active
+  planned_vertical_distance: 760
+  completed_vertical_distance: 0
+  completed_date: 2026-05-14
+  strava_activity_id: MyString
+  status: 0
+
+day_five_week_one_user_two_active:
+  week: week_one_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-05-15
+  strava_activity_id: MyString
+  status: 2
+
+day_six_week_one_user_two_active:
+  week: week_one_user_two_active
+  planned_vertical_distance: 410
+  completed_vertical_distance: 0
+  completed_date: 2026-05-16
+  strava_activity_id: MyString
+  status: 2
+
+day_seven_week_one_user_two_active:
+  week: week_one_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-05-17
+  strava_activity_id: MyString
+  status: 2
+
+# --- WEEK 2 ---
+day_one_week_two_user_two_active:
+  week: week_two_user_two_active
+  planned_vertical_distance: 139
+  completed_vertical_distance: 139
+  completed_date: 2026-05-18
+  strava_activity_id: MyString
+  status: 1
+
+day_two_week_two_user_two_active:
+  week: week_two_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-05-19
+  strava_activity_id: MyString
+  status: 1
+
+day_three_week_two_user_two_active:
+  week: week_two_user_two_active
+  planned_vertical_distance: 519
+  completed_vertical_distance: 519
+  completed_date: 2026-05-20
+  strava_activity_id: MyString
+  status: 1
+
+day_four_week_two_user_two_active:
+  week: week_two_user_two_active
+  planned_vertical_distance: 259
+  completed_vertical_distance: 259
+  completed_date: 2026-05-21
+  strava_activity_id: MyString
+  status: 1
+
+day_five_week_two_user_two_active:
+  week: week_two_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-05-22
+  strava_activity_id: MyString
+  status: 1
+
+day_six_week_two_user_two_active:
+  week: week_two_user_two_active
+  planned_vertical_distance: 140
+  completed_vertical_distance: 140
+  completed_date: 2026-05-23
+  strava_activity_id: MyString
+  status: 1
+
+day_seven_week_two_user_two_active:
+  week: week_two_user_two_active
+  planned_vertical_distance: 0
+  completed_vertical_distance: 0
+  completed_date: 2026-05-24
+  strava_activity_id: MyString
+  status: 1
+
+# --- WEEK 3 ---
+day_one_week_three_user_two_active:
+  week: week_three_user_two_active
+  planned_vertical_distance: 230
+  completed_vertical_distance: 230
+  completed_date: 2026-05-25
+  strava_activity_id: MyString
+  status: 1
+
+day_two_week_three_user_two_active:
+  week: week_three_user_two_active
+  planned_vertical_distance: 480
+  completed_vertical_distance: 480
+  completed_date: 2026-05-26
+  strava_activity_id: MyString
+  status: 1
+
+day_three_week_three_user_two_active:
+  week: week_three_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-05-27
+  strava_activity_id: MyString
+  status: 1
+
+day_four_week_three_user_two_active:
+  week: week_three_user_two_active
+  planned_vertical_distance: 790
+  completed_vertical_distance: 790
+  completed_date: 2026-05-28
+  strava_activity_id: MyString
+  status: 1
+
+day_five_week_three_user_two_active:
+  week: week_three_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-05-29
+  strava_activity_id: MyString
+  status: 1
+
+day_six_week_three_user_two_active:
+  week: week_three_user_two_active
+  planned_vertical_distance: 440
+  completed_vertical_distance: 440
+  completed_date: 2026-05-30
+  strava_activity_id: MyString
+  status: 1
+
+day_seven_week_three_user_two_active:
+  week: week_three_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-05-31
+  strava_activity_id: MyString
+  status: 1
+
+# --- WEEK 4 ---
+day_one_week_four_user_two_active:
+  week: week_four_user_two_active
+  planned_vertical_distance: 139
+  completed_vertical_distance: 139
+  completed_date: 2026-06-01
+  strava_activity_id: MyString
+  status: 1
+
+day_two_week_four_user_two_active:
+  week: week_four_user_two_active
+  planned_vertical_distance: 519
+  completed_vertical_distance: 519
+  completed_date: 2026-06-02
+  strava_activity_id: MyString
+  status: 1
+
+day_three_week_four_user_two_active:
+  week: week_four_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-06-03
+  strava_activity_id: MyString
+  status: 1
+
+day_four_week_four_user_two_active:
+  week: week_four_user_two_active
+  planned_vertical_distance: 259
+  completed_vertical_distance: 259
+  completed_date: 2026-06-04
+  strava_activity_id: MyString
+  status: 1
+
+day_five_week_four_user_two_active:
+  week: week_four_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-05
+  strava_activity_id: MyString
+  status: 1
+
+day_six_week_four_user_two_active:
+  week: week_four_user_two_active
+  planned_vertical_distance: 140
+  completed_vertical_distance: 140
+  completed_date: 2026-06-06
+  strava_activity_id: MyString
+  status: 1
+
+day_seven_week_four_user_two_active:
+  week: week_four_user_two_active
+  planned_vertical_distance: 0
+  completed_vertical_distance: 0
+  completed_date: 2026-06-07
+  strava_activity_id: MyString
+  status: 1
+
+# --- WEEK 5 ---
+day_one_week_five_user_two_active:
+  week: week_five_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-08
+  strava_activity_id: MyString
+  status: 1
+
+day_two_week_five_user_two_active:
+  week: week_five_user_two_active
+  planned_vertical_distance: 450
+  completed_vertical_distance: 450
+  completed_date: 2026-06-09
+  strava_activity_id: MyString
+  status: 1
+
+day_three_week_five_user_two_active:
+  week: week_five_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-10
+  strava_activity_id: MyString
+  status: 1
+
+day_four_week_five_user_two_active:
+  week: week_five_user_two_active
+  planned_vertical_distance: 830
+  completed_vertical_distance: 830
+  completed_date: 2026-06-11
+  strava_activity_id: MyString
+  status: 1
+
+day_five_week_five_user_two_active:
+  week: week_five_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-06-12
+  strava_activity_id: MyString
+  status: 1
+
+day_six_week_five_user_two_active:
+  week: week_five_user_two_active
+  planned_vertical_distance: 560
+  completed_vertical_distance: 560
+  completed_date: 2026-06-13
+  strava_activity_id: MyString
+  status: 1
+
+day_seven_week_five_user_two_active:
+  week: week_five_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-14
+  strava_activity_id: MyString
+  status: 1
+
+# --- WEEK 6 ---
+day_one_week_six_user_two_active:
+  week: week_six_user_two_active
+  planned_vertical_distance: 174
+  completed_vertical_distance: 174
+  completed_date: 2026-06-15
+  strava_activity_id: MyString
+  status: 1
+
+day_two_week_six_user_two_active:
+  week: week_six_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-16
+  strava_activity_id: MyString
+  status: 1
+
+day_three_week_six_user_two_active:
+  week: week_six_user_two_active
+  planned_vertical_distance: 571
+  completed_vertical_distance: 571
+  completed_date: 2026-06-17
+  strava_activity_id: MyString
+  status: 1
+
+day_four_week_six_user_two_active:
+  week: week_six_user_two_active
+  planned_vertical_distance: 285
+  completed_vertical_distance: 285
+  completed_date: 2026-06-18
+  strava_activity_id: MyString
+  status: 1
+
+day_five_week_six_user_two_active:
+  week: week_six_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-06-19
+  strava_activity_id: MyString
+  status: 1
+
+day_six_week_six_user_two_active:
+  week: week_six_user_two_active
+  planned_vertical_distance: 157
+  completed_vertical_distance: 157
+  completed_date: 2026-06-20
+  strava_activity_id: MyString
+  status: 1
+
+day_seven_week_six_user_two_active:
+  week: week_six_user_two_active
+  planned_vertical_distance: 0
+  completed_vertical_distance: 0
+  completed_date: 2026-06-21
+  strava_activity_id: MyString
+  status: 1
+
+# --- WEEK 7 ---
+day_one_week_seven_user_two_active:
+  week: week_seven_user_two_active
+  planned_vertical_distance: 200
+  completed_vertical_distance: 200
+  completed_date: 2026-06-22
+  strava_activity_id: MyString
+  status: 1
+
+day_two_week_seven_user_two_active:
+  week: week_seven_user_two_active
+  planned_vertical_distance: 560
+  completed_vertical_distance: 560
+  completed_date: 2026-06-23
+  strava_activity_id: MyString
+  status: 1
+
+day_three_week_seven_user_two_active:
+  week: week_seven_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-24
+  strava_activity_id: MyString
+  status: 1
+
+day_four_week_seven_user_two_active:
+  week: week_seven_user_two_active
+  planned_vertical_distance: 920
+  completed_vertical_distance: 920
+  completed_date: 2026-06-25
+  strava_activity_id: MyString
+  status: 1
+
+day_five_week_seven_user_two_active:
+  week: week_seven_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-26
+  strava_activity_id: MyString
+  status: 1
+
+day_six_week_seven_user_two_active:
+  week: week_seven_user_two_active
+  planned_vertical_distance: 490
+  completed_vertical_distance: 490
+  completed_date: 2026-06-27
+  strava_activity_id: MyString
+  status: 1
+
+day_seven_week_seven_user_two_active:
+  week: week_seven_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-28
+  strava_activity_id: MyString
+  status: 1
+
+# --- WEEK 8 ---
+day_one_week_eight_user_two_active:
+  week: week_eight_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-06-29
+  strava_activity_id: MyString
+  status: 1
+
+day_two_week_eight_user_two_active:
+  week: week_eight_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-06-30
+  strava_activity_id: MyString
+  status: 1
+
+day_three_week_eight_user_two_active:
+  week: week_eight_user_two_active
+  planned_vertical_distance: 630
+  completed_vertical_distance: 630
+  completed_date: 2026-07-01
+  strava_activity_id: MyString
+  status: 1
+
+day_four_week_eight_user_two_active:
+  week: week_eight_user_two_active
+  planned_vertical_distance: 310
+  completed_vertical_distance: 310
+  completed_date: 2026-07-02
+  strava_activity_id: MyString
+  status: 1
+
+day_five_week_eight_user_two_active:
+  week: week_eight_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 90
+  completed_date: 2026-07-03
+  strava_activity_id: MyString
+  status: 1
+
+day_six_week_eight_user_two_active:
+  week: week_eight_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-07-04
+  strava_activity_id: MyString
+  status: 1
+
+day_seven_week_eight_user_two_active:
+  week: week_eight_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 150
+  completed_date: 2026-07-05
+  strava_activity_id: MyString
+  status: 1
+
+# --- WEEK 9 ---
+day_one_week_nine_user_two_active:
+  week: week_nine_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-07-06
+  strava_activity_id: MyString
+  status: 0
+
+day_two_week_nine_user_two_active:
+  week: week_nine_user_two_active
+  planned_vertical_distance: 660
+  completed_vertical_distance: 0
+  completed_date: 2026-07-07
+  strava_activity_id: MyString
+  status: 0
+
+day_three_week_nine_user_two_active:
+  week: week_nine_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-07-08
+  strava_activity_id: MyString
+  status: 0
+
+day_four_week_nine_user_two_active:
+  week: week_nine_user_two_active
+  planned_vertical_distance: 1010
+  completed_vertical_distance: 0
+  completed_date: 2026-07-09
+  strava_activity_id: MyString
+  status: 0
+
+day_five_week_nine_user_two_active:
+  week: week_nine_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-07-10
+  strava_activity_id: MyString
+  status: 0
+
+day_six_week_nine_user_two_active:
+  week: week_nine_user_two_active
+  planned_vertical_distance: 610
+  completed_vertical_distance: 0
+  completed_date: 2026-07-11
+  strava_activity_id: MyString
+  status: 0
+
+day_seven_week_nine_user_two_active:
+  week: week_nine_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-07-12
+  strava_activity_id: MyString
+  status: 0
+
+# --- WEEK 10 ---
+day_one_week_ten_user_two_active:
+  week: week_ten_user_two_active
+  planned_vertical_distance: 113
+  completed_vertical_distance: 0
+  completed_date: 2026-07-13
+  strava_activity_id: MyString
+  status: 0
+
+day_two_week_ten_user_two_active:
+  week: week_ten_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 0
+  completed_date: 2026-07-14
+  strava_activity_id: MyString
+  status: 0
+
+day_three_week_ten_user_two_active:
+  week: week_ten_user_two_active
+  planned_vertical_distance: 691
+  completed_vertical_distance: 0
+  completed_date: 2026-07-15
+  strava_activity_id: MyString
+  status: 0
+
+day_four_week_ten_user_two_active:
+  week: week_ten_user_two_active
+  planned_vertical_distance: 345
+  completed_vertical_distance: 0
+  completed_date: 2026-07-16
+  strava_activity_id: MyString
+  status: 0
+
+day_five_week_ten_user_two_active:
+  week: week_ten_user_two_active
+  planned_vertical_distance: 90
+  completed_vertical_distance: 0
+  completed_date: 2026-07-17
+  strava_activity_id: MyString
+  status: 0
+
+day_six_week_ten_user_two_active:
+  week: week_ten_user_two_active
+  planned_vertical_distance: 260
+  completed_vertical_distance: 0
+  completed_date: 2026-07-18
+  strava_activity_id: MyString
+  status: 0
+
+day_seven_week_ten_user_two_active:
+  week: week_ten_user_two_active
+  planned_vertical_distance: 138
+  completed_vertical_distance: 0
+  completed_date: 2026-07-19
+  strava_activity_id: MyString
+  status: 0
+
+# --- WEEK 11 ---
+day_one_week_eleven_user_two_active:
+  week: week_eleven_user_two_active
+  planned_vertical_distance: 200
+  completed_vertical_distance: 0
+  completed_date: 2026-07-20
+  strava_activity_id: MyString
+  status: 0
+
+day_two_week_eleven_user_two_active:
+  week: week_eleven_user_two_active
+  planned_vertical_distance: 690
+  completed_vertical_distance: 0
+  completed_date: 2026-07-21
+  strava_activity_id: MyString
+  status: 0
+
+day_three_week_eleven_user_two_active:
+  week: week_eleven_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-07-22
+  strava_activity_id: MyString
+  status: 0
+
+day_four_week_eleven_user_two_active:
+  week: week_eleven_user_two_active
+  planned_vertical_distance: 1110
+  completed_vertical_distance: 0
+  completed_date: 2026-07-23
+  strava_activity_id: MyString
+  status: 0
+
+day_five_week_eleven_user_two_active:
+  week: week_eleven_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-07-24
+  strava_activity_id: MyString
+  status: 0
+
+day_six_week_eleven_user_two_active:
+  week: week_eleven_user_two_active
+  planned_vertical_distance: 710
+  completed_vertical_distance: 0
+  completed_date: 2026-07-25
+  strava_activity_id: MyString
+  status: 0
+
+day_seven_week_eleven_user_two_active:
+  week: week_eleven_user_two_active
+  planned_vertical_distance: 150
+  completed_vertical_distance: 0
+  completed_date: 2026-07-26
+  strava_activity_id: MyString
+  status: 0

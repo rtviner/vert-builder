@@ -62,4 +62,40 @@ class PlanTest < ActiveSupport::TestCase
     assert_equal "every_other", @plan.recovery_pattern
     assert_equal "planned", @plan.status
   end
+
+  test "week count returns number of weeks in plan" do
+    @plan.save!
+    10.times do |i|
+      @plan.weeks.create!(
+        week_number: i + 1,
+        category: i.even? ? :progression : :recovery,
+        status: :planned,
+        planned_duration: 100 + i+1,
+        vertical_build_percentage: @plan.vertical_build_percentage,
+        recovery_reduction_percentage: i.even? ? nil : 40
+      )
+    end
+
+    assert_equal 10, @plan.week_count
+  end
+
+  test "current week number returns the current active or in progress week" do
+    plan = plans(:user_two_active)
+    in_progress_week = weeks(:week_nine_user_two_active)
+
+    assert_equal in_progress_week.week_number, plan.current_week_number
+  end
+  test "current week number returns nil if plan is not active" do
+    plan = plans(:user_one_planned)
+
+    assert plan.current_week_number.nil?
+  end
+
+  test "progress percentage returns the percentage of completed weeks to total weeks" do
+    plan = plans(:user_two_active)
+    last_completed_week = weeks(:week_eight_user_two_active).week_number
+    final_week = weeks(:week_eleven_user_two_active).week_number
+    progress = (last_completed_week.to_f/final_week) * 100
+    assert_equal progress.round, plan.progress_percentage
+  end
 end

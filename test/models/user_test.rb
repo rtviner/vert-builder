@@ -8,14 +8,14 @@ class UserTest < ActiveSupport::TestCase
 
   test "average_weekly_vertical_distance returns baseline if less than 4 completed weeks" do
     user = users(:one)
-    assert_equal plans(:one).baseline_vertical_distance, user.average_weekly_vertical_distance
+    assert_equal plans(:user_one_active).baseline_vertical_distance, user.average_weekly_vertical_distance
   end
 
   test "average_weekly_vertical_distance returns average of last 4 completed weeks" do
     user = users(:one)
-    plan = plans(:one)
-    weeks(:one).update(status: :completed, completed_vertical_distance: 1000)
-    first_week = weeks(:one)
+    plan = plans(:user_one_active)
+    weeks(:week_one_user_one_active).update(status: :completed, completed_vertical_distance: 1000)
+    first_week = weeks(:week_one_user_one_active)
     4.times do |i|
       start_date = first_week.start_date + ((i + 1) * 7)
       plan.weeks.create!(
@@ -37,14 +37,14 @@ class UserTest < ActiveSupport::TestCase
 
   test "average_weekly_duration returns baseline if less than 4 completed weeks" do
     user = users(:one)
-    assert_equal plans(:one).baseline_duration, user.average_weekly_duration
+    assert_equal plans(:user_one_active).baseline_duration, user.average_weekly_duration
   end
 
   test "average_weekly_duration returns average of last 4 completed weeks" do
     user = users(:one)
-    plan = plans(:one)
-    weeks(:one).update(status: :completed, completed_duration: 120)
-    first_week = weeks(:one)
+    plan = plans(:user_one_active)
+    weeks(:week_one_user_one_active).update(status: :completed, completed_duration: 120)
+    first_week = weeks(:week_one_user_one_active)
     4.times do |i|
       start_date = first_week.start_date + ((i + 1) * 7)
       plan.weeks.create!(
