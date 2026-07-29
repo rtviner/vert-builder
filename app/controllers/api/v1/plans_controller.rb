@@ -28,6 +28,11 @@ class Api::V1::PlansController < ApplicationController
     render json: plans.map { |plan| plan_summary(plan) }, status: :ok
   end
 
+  def show
+    plan = Current.user.plans.includes(:weeks).find(params[:id])
+    render json: plan_detail(plan), status: :ok
+  end
+
   private
 
   def plan_params
@@ -44,15 +49,37 @@ class Api::V1::PlansController < ApplicationController
     )
   end
 
-  def plan_summary(plan)
+  def plan_base(plan)
     plan.as_json(only: %i[
       id status recovery_pattern baseline_vertical_distance
       goal_vertical_distance vertical_build_percentage
-      start_date end_date created_at
-    ]).merge(
+      start_date end_date
+    ])
+  end
+
+  def plan_summary(plan)
+    plan_base(plan).merge(
+      created_at: plan.created_at,
       week_count: plan.week_count,
       current_week_number: plan.current_week_number,
       progress_percentage: plan.progress_percentage
     )
+  end
+
+  def plan_detail(plan)
+    plan_base(plan).merge(
+      completed_date: plan.completed_date,
+      weeks: plan.weeks.map { |week| week_detail(week) }
+    )
+  end
+
+  def week_detail(week)
+    week.as_json(only: %i[id week_number week_type status start_date end_date]).merge(
+      days: week.days.map { |day| day_detail(day) }
+    )
+  end
+
+  def day_detail(day)
+    day.as_json(only: %i[id position planned_vertical_distance status])
   end
 end

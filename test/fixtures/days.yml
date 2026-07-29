@@ -2,6 +2,7 @@
 
 day_one_week_one_user_one_active:
   week: week_one_user_one_active
+  position: 0
   planned_vertical_distance: 1
   completed_vertical_distance: 1
   completed_date: 2026-05-28
@@ -10,6 +11,7 @@ day_one_week_one_user_one_active:
 
 day_two_week_one_user_one_active:
   week: week_one_user_one_active
+  position: 1
   planned_vertical_distance: 1
   completed_vertical_distance: 1
   completed_date: 2026-05-28
@@ -19,6 +21,7 @@ day_two_week_one_user_one_active:
 # --- WEEK 1 ---
 day_one_week_one_user_two_active:
   week: week_one_user_two_active
+  position: 0
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-05-11
@@ -27,6 +30,7 @@ day_one_week_one_user_two_active:
 
 day_two_week_one_user_two_active:
   week: week_one_user_two_active
+  position: 1
   planned_vertical_distance: 450
   completed_vertical_distance: 0
   completed_date: 2026-05-12
@@ -35,6 +39,7 @@ day_two_week_one_user_two_active:
 
 day_three_week_one_user_two_active:
   week: week_one_user_two_active
+  position: 2
   planned_vertical_distance: 90
   completed_vertical_distance: 0
   completed_date: 2026-05-13
@@ -43,6 +48,7 @@ day_three_week_one_user_two_active:
 
 day_four_week_one_user_two_active:
   week: week_one_user_two_active
+  position: 3
   planned_vertical_distance: 760
   completed_vertical_distance: 0
   completed_date: 2026-05-14
@@ -51,6 +57,7 @@ day_four_week_one_user_two_active:
 
 day_five_week_one_user_two_active:
   week: week_one_user_two_active
+  position: 4
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-05-15
@@ -59,6 +66,7 @@ day_five_week_one_user_two_active:
 
 day_six_week_one_user_two_active:
   week: week_one_user_two_active
+  position: 5
   planned_vertical_distance: 410
   completed_vertical_distance: 0
   completed_date: 2026-05-16
@@ -67,6 +75,7 @@ day_six_week_one_user_two_active:
 
 day_seven_week_one_user_two_active:
   week: week_one_user_two_active
+  position: 6
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-05-17
@@ -76,6 +85,7 @@ day_seven_week_one_user_two_active:
 # --- WEEK 2 ---
 day_one_week_two_user_two_active:
   week: week_two_user_two_active
+  position: 0
   planned_vertical_distance: 139
   completed_vertical_distance: 139
   completed_date: 2026-05-18
@@ -84,6 +94,7 @@ day_one_week_two_user_two_active:
 
 day_two_week_two_user_two_active:
   week: week_two_user_two_active
+  position: 1
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-05-19
@@ -92,6 +103,7 @@ day_two_week_two_user_two_active:
 
 day_three_week_two_user_two_active:
   week: week_two_user_two_active
+  position: 2
   planned_vertical_distance: 519
   completed_vertical_distance: 519
   completed_date: 2026-05-20
@@ -100,6 +112,7 @@ day_three_week_two_user_two_active:
 
 day_four_week_two_user_two_active:
   week: week_two_user_two_active
+  position: 3
   planned_vertical_distance: 259
   completed_vertical_distance: 259
   completed_date: 2026-05-21
@@ -108,6 +121,7 @@ day_four_week_two_user_two_active:
 
 day_five_week_two_user_two_active:
   week: week_two_user_two_active
+  position: 4
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-05-22
@@ -116,6 +130,7 @@ day_five_week_two_user_two_active:
 
 day_six_week_two_user_two_active:
   week: week_two_user_two_active
+  position: 5
   planned_vertical_distance: 140
   completed_vertical_distance: 140
   completed_date: 2026-05-23
@@ -124,6 +139,7 @@ day_six_week_two_user_two_active:
 
 day_seven_week_two_user_two_active:
   week: week_two_user_two_active
+  position: 6
   planned_vertical_distance: 0
   completed_vertical_distance: 0
   completed_date: 2026-05-24
@@ -133,6 +149,7 @@ day_seven_week_two_user_two_active:
 # --- WEEK 3 ---
 day_one_week_three_user_two_active:
   week: week_three_user_two_active
+  position: 0
   planned_vertical_distance: 230
   completed_vertical_distance: 230
   completed_date: 2026-05-25
@@ -141,6 +158,7 @@ day_one_week_three_user_two_active:
 
 day_two_week_three_user_two_active:
   week: week_three_user_two_active
+  position: 1
   planned_vertical_distance: 480
   completed_vertical_distance: 480
   completed_date: 2026-05-26
@@ -149,6 +167,7 @@ day_two_week_three_user_two_active:
 
 day_three_week_three_user_two_active:
   week: week_three_user_two_active
+  position: 2
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-05-27
@@ -157,6 +176,7 @@ day_three_week_three_user_two_active:
 
 day_four_week_three_user_two_active:
   week: week_three_user_two_active
+  position: 3
   planned_vertical_distance: 790
   completed_vertical_distance: 790
   completed_date: 2026-05-28
@@ -165,6 +185,7 @@ day_four_week_three_user_two_active:
 
 day_five_week_three_user_two_active:
   week: week_three_user_two_active
+  position: 4
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-05-29
@@ -173,6 +194,7 @@ day_five_week_three_user_two_active:
 
 day_six_week_three_user_two_active:
   week: week_three_user_two_active
+  position: 5
   planned_vertical_distance: 440
   completed_vertical_distance: 440
   completed_date: 2026-05-30
@@ -181,6 +203,7 @@ day_six_week_three_user_two_active:
 
 day_seven_week_three_user_two_active:
   week: week_three_user_two_active
+  position: 6
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-05-31
@@ -190,6 +213,7 @@ day_seven_week_three_user_two_active:
 # --- WEEK 4 ---
 day_one_week_four_user_two_active:
   week: week_four_user_two_active
+  position: 0
   planned_vertical_distance: 139
   completed_vertical_distance: 139
   completed_date: 2026-06-01
@@ -198,6 +222,7 @@ day_one_week_four_user_two_active:
 
 day_two_week_four_user_two_active:
   week: week_four_user_two_active
+  position: 1
   planned_vertical_distance: 519
   completed_vertical_distance: 519
   completed_date: 2026-06-02
@@ -206,6 +231,7 @@ day_two_week_four_user_two_active:
 
 day_three_week_four_user_two_active:
   week: week_four_user_two_active
+  position: 2
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-06-03
@@ -214,6 +240,7 @@ day_three_week_four_user_two_active:
 
 day_four_week_four_user_two_active:
   week: week_four_user_two_active
+  position: 3
   planned_vertical_distance: 259
   completed_vertical_distance: 259
   completed_date: 2026-06-04
@@ -222,6 +249,7 @@ day_four_week_four_user_two_active:
 
 day_five_week_four_user_two_active:
   week: week_four_user_two_active
+  position: 4
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-05
@@ -230,6 +258,7 @@ day_five_week_four_user_two_active:
 
 day_six_week_four_user_two_active:
   week: week_four_user_two_active
+  position: 5
   planned_vertical_distance: 140
   completed_vertical_distance: 140
   completed_date: 2026-06-06
@@ -238,6 +267,7 @@ day_six_week_four_user_two_active:
 
 day_seven_week_four_user_two_active:
   week: week_four_user_two_active
+  position: 6
   planned_vertical_distance: 0
   completed_vertical_distance: 0
   completed_date: 2026-06-07
@@ -247,6 +277,7 @@ day_seven_week_four_user_two_active:
 # --- WEEK 5 ---
 day_one_week_five_user_two_active:
   week: week_five_user_two_active
+  position: 0
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-08
@@ -255,6 +286,7 @@ day_one_week_five_user_two_active:
 
 day_two_week_five_user_two_active:
   week: week_five_user_two_active
+  position: 1
   planned_vertical_distance: 450
   completed_vertical_distance: 450
   completed_date: 2026-06-09
@@ -263,6 +295,7 @@ day_two_week_five_user_two_active:
 
 day_three_week_five_user_two_active:
   week: week_five_user_two_active
+  position: 2
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-10
@@ -271,6 +304,7 @@ day_three_week_five_user_two_active:
 
 day_four_week_five_user_two_active:
   week: week_five_user_two_active
+  position: 3
   planned_vertical_distance: 830
   completed_vertical_distance: 830
   completed_date: 2026-06-11
@@ -279,6 +313,7 @@ day_four_week_five_user_two_active:
 
 day_five_week_five_user_two_active:
   week: week_five_user_two_active
+  position: 4
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-06-12
@@ -287,6 +322,7 @@ day_five_week_five_user_two_active:
 
 day_six_week_five_user_two_active:
   week: week_five_user_two_active
+  position: 5
   planned_vertical_distance: 560
   completed_vertical_distance: 560
   completed_date: 2026-06-13
@@ -295,6 +331,7 @@ day_six_week_five_user_two_active:
 
 day_seven_week_five_user_two_active:
   week: week_five_user_two_active
+  position: 6
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-14
@@ -304,6 +341,7 @@ day_seven_week_five_user_two_active:
 # --- WEEK 6 ---
 day_one_week_six_user_two_active:
   week: week_six_user_two_active
+  position: 0
   planned_vertical_distance: 174
   completed_vertical_distance: 174
   completed_date: 2026-06-15
@@ -312,6 +350,7 @@ day_one_week_six_user_two_active:
 
 day_two_week_six_user_two_active:
   week: week_six_user_two_active
+  position: 1
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-16
@@ -320,6 +359,7 @@ day_two_week_six_user_two_active:
 
 day_three_week_six_user_two_active:
   week: week_six_user_two_active
+  position: 2
   planned_vertical_distance: 571
   completed_vertical_distance: 571
   completed_date: 2026-06-17
@@ -328,6 +368,7 @@ day_three_week_six_user_two_active:
 
 day_four_week_six_user_two_active:
   week: week_six_user_two_active
+  position: 3
   planned_vertical_distance: 285
   completed_vertical_distance: 285
   completed_date: 2026-06-18
@@ -336,6 +377,7 @@ day_four_week_six_user_two_active:
 
 day_five_week_six_user_two_active:
   week: week_six_user_two_active
+  position: 4
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-06-19
@@ -344,6 +386,7 @@ day_five_week_six_user_two_active:
 
 day_six_week_six_user_two_active:
   week: week_six_user_two_active
+  position: 5
   planned_vertical_distance: 157
   completed_vertical_distance: 157
   completed_date: 2026-06-20
@@ -352,6 +395,7 @@ day_six_week_six_user_two_active:
 
 day_seven_week_six_user_two_active:
   week: week_six_user_two_active
+  position: 6
   planned_vertical_distance: 0
   completed_vertical_distance: 0
   completed_date: 2026-06-21
@@ -361,6 +405,7 @@ day_seven_week_six_user_two_active:
 # --- WEEK 7 ---
 day_one_week_seven_user_two_active:
   week: week_seven_user_two_active
+  position: 0
   planned_vertical_distance: 200
   completed_vertical_distance: 200
   completed_date: 2026-06-22
@@ -369,6 +414,7 @@ day_one_week_seven_user_two_active:
 
 day_two_week_seven_user_two_active:
   week: week_seven_user_two_active
+  position: 1
   planned_vertical_distance: 560
   completed_vertical_distance: 560
   completed_date: 2026-06-23
@@ -377,6 +423,7 @@ day_two_week_seven_user_two_active:
 
 day_three_week_seven_user_two_active:
   week: week_seven_user_two_active
+  position: 2
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-24
@@ -385,6 +432,7 @@ day_three_week_seven_user_two_active:
 
 day_four_week_seven_user_two_active:
   week: week_seven_user_two_active
+  position: 3
   planned_vertical_distance: 920
   completed_vertical_distance: 920
   completed_date: 2026-06-25
@@ -393,6 +441,7 @@ day_four_week_seven_user_two_active:
 
 day_five_week_seven_user_two_active:
   week: week_seven_user_two_active
+  position: 4
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-26
@@ -401,6 +450,7 @@ day_five_week_seven_user_two_active:
 
 day_six_week_seven_user_two_active:
   week: week_seven_user_two_active
+  position: 5
   planned_vertical_distance: 490
   completed_vertical_distance: 490
   completed_date: 2026-06-27
@@ -409,6 +459,7 @@ day_six_week_seven_user_two_active:
 
 day_seven_week_seven_user_two_active:
   week: week_seven_user_two_active
+  position: 6
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-28
@@ -418,6 +469,7 @@ day_seven_week_seven_user_two_active:
 # --- WEEK 8 ---
 day_one_week_eight_user_two_active:
   week: week_eight_user_two_active
+  position: 0
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-06-29
@@ -426,6 +478,7 @@ day_one_week_eight_user_two_active:
 
 day_two_week_eight_user_two_active:
   week: week_eight_user_two_active
+  position: 1
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-06-30
@@ -434,6 +487,7 @@ day_two_week_eight_user_two_active:
 
 day_three_week_eight_user_two_active:
   week: week_eight_user_two_active
+  position: 2
   planned_vertical_distance: 630
   completed_vertical_distance: 630
   completed_date: 2026-07-01
@@ -442,6 +496,7 @@ day_three_week_eight_user_two_active:
 
 day_four_week_eight_user_two_active:
   week: week_eight_user_two_active
+  position: 3
   planned_vertical_distance: 310
   completed_vertical_distance: 310
   completed_date: 2026-07-02
@@ -450,6 +505,7 @@ day_four_week_eight_user_two_active:
 
 day_five_week_eight_user_two_active:
   week: week_eight_user_two_active
+  position: 4
   planned_vertical_distance: 90
   completed_vertical_distance: 90
   completed_date: 2026-07-03
@@ -458,6 +514,7 @@ day_five_week_eight_user_two_active:
 
 day_six_week_eight_user_two_active:
   week: week_eight_user_two_active
+  position: 5
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-07-04
@@ -466,6 +523,7 @@ day_six_week_eight_user_two_active:
 
 day_seven_week_eight_user_two_active:
   week: week_eight_user_two_active
+  position: 6
   planned_vertical_distance: 150
   completed_vertical_distance: 150
   completed_date: 2026-07-05
@@ -475,6 +533,7 @@ day_seven_week_eight_user_two_active:
 # --- WEEK 9 ---
 day_one_week_nine_user_two_active:
   week: week_nine_user_two_active
+  position: 0
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-07-06
@@ -483,6 +542,7 @@ day_one_week_nine_user_two_active:
 
 day_two_week_nine_user_two_active:
   week: week_nine_user_two_active
+  position: 1
   planned_vertical_distance: 660
   completed_vertical_distance: 0
   completed_date: 2026-07-07
@@ -491,6 +551,7 @@ day_two_week_nine_user_two_active:
 
 day_three_week_nine_user_two_active:
   week: week_nine_user_two_active
+  position: 2
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-07-08
@@ -499,6 +560,7 @@ day_three_week_nine_user_two_active:
 
 day_four_week_nine_user_two_active:
   week: week_nine_user_two_active
+  position: 3
   planned_vertical_distance: 1010
   completed_vertical_distance: 0
   completed_date: 2026-07-09
@@ -507,6 +569,7 @@ day_four_week_nine_user_two_active:
 
 day_five_week_nine_user_two_active:
   week: week_nine_user_two_active
+  position: 4
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-07-10
@@ -515,6 +578,7 @@ day_five_week_nine_user_two_active:
 
 day_six_week_nine_user_two_active:
   week: week_nine_user_two_active
+  position: 5
   planned_vertical_distance: 610
   completed_vertical_distance: 0
   completed_date: 2026-07-11
@@ -523,6 +587,7 @@ day_six_week_nine_user_two_active:
 
 day_seven_week_nine_user_two_active:
   week: week_nine_user_two_active
+  position: 6
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-07-12
@@ -532,6 +597,7 @@ day_seven_week_nine_user_two_active:
 # --- WEEK 10 ---
 day_one_week_ten_user_two_active:
   week: week_ten_user_two_active
+  position: 0
   planned_vertical_distance: 113
   completed_vertical_distance: 0
   completed_date: 2026-07-13
@@ -540,6 +606,7 @@ day_one_week_ten_user_two_active:
 
 day_two_week_ten_user_two_active:
   week: week_ten_user_two_active
+  position: 1
   planned_vertical_distance: 90
   completed_vertical_distance: 0
   completed_date: 2026-07-14
@@ -548,6 +615,7 @@ day_two_week_ten_user_two_active:
 
 day_three_week_ten_user_two_active:
   week: week_ten_user_two_active
+  position: 2
   planned_vertical_distance: 691
   completed_vertical_distance: 0
   completed_date: 2026-07-15
@@ -556,6 +624,7 @@ day_three_week_ten_user_two_active:
 
 day_four_week_ten_user_two_active:
   week: week_ten_user_two_active
+  position: 3
   planned_vertical_distance: 345
   completed_vertical_distance: 0
   completed_date: 2026-07-16
@@ -564,6 +633,7 @@ day_four_week_ten_user_two_active:
 
 day_five_week_ten_user_two_active:
   week: week_ten_user_two_active
+  position: 4
   planned_vertical_distance: 90
   completed_vertical_distance: 0
   completed_date: 2026-07-17
@@ -572,6 +642,7 @@ day_five_week_ten_user_two_active:
 
 day_six_week_ten_user_two_active:
   week: week_ten_user_two_active
+  position: 5
   planned_vertical_distance: 260
   completed_vertical_distance: 0
   completed_date: 2026-07-18
@@ -580,6 +651,7 @@ day_six_week_ten_user_two_active:
 
 day_seven_week_ten_user_two_active:
   week: week_ten_user_two_active
+  position: 6
   planned_vertical_distance: 138
   completed_vertical_distance: 0
   completed_date: 2026-07-19
@@ -589,6 +661,7 @@ day_seven_week_ten_user_two_active:
 # --- WEEK 11 ---
 day_one_week_eleven_user_two_active:
   week: week_eleven_user_two_active
+  position: 0
   planned_vertical_distance: 200
   completed_vertical_distance: 0
   completed_date: 2026-07-20
@@ -597,6 +670,7 @@ day_one_week_eleven_user_two_active:
 
 day_two_week_eleven_user_two_active:
   week: week_eleven_user_two_active
+  position: 1
   planned_vertical_distance: 690
   completed_vertical_distance: 0
   completed_date: 2026-07-21
@@ -605,6 +679,7 @@ day_two_week_eleven_user_two_active:
 
 day_three_week_eleven_user_two_active:
   week: week_eleven_user_two_active
+  position: 2
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-07-22
@@ -613,6 +688,7 @@ day_three_week_eleven_user_two_active:
 
 day_four_week_eleven_user_two_active:
   week: week_eleven_user_two_active
+  position: 3
   planned_vertical_distance: 1110
   completed_vertical_distance: 0
   completed_date: 2026-07-23
@@ -621,6 +697,7 @@ day_four_week_eleven_user_two_active:
 
 day_five_week_eleven_user_two_active:
   week: week_eleven_user_two_active
+  position: 4
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-07-24
@@ -629,6 +706,7 @@ day_five_week_eleven_user_two_active:
 
 day_six_week_eleven_user_two_active:
   week: week_eleven_user_two_active
+  position: 5
   planned_vertical_distance: 710
   completed_vertical_distance: 0
   completed_date: 2026-07-25
@@ -637,6 +715,7 @@ day_six_week_eleven_user_two_active:
 
 day_seven_week_eleven_user_two_active:
   week: week_eleven_user_two_active
+  position: 6
   planned_vertical_distance: 150
   completed_vertical_distance: 0
   completed_date: 2026-07-26

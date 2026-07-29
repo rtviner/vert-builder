@@ -1,6 +1,6 @@
 class Week < ApplicationRecord
   belongs_to :plan
-  has_many :days, dependent: :destroy
+  has_many :days, -> { order(:position) }, dependent: :destroy
 
   CATEGORY_OPTIONS = %w[progression recovery taper goal].freeze
 
@@ -33,8 +33,7 @@ class Week < ApplicationRecord
               less_than: Plan::MAX_PROGRESSION_PERCENTAGE
             },
             if: -> { category == "progression" }
-  # completed here is redundant because Week.completed? remove?
-  scope :completed, -> { where(status: :completed) }
+
   scope :recovery, -> { where(category: %w[recovery taper]) }
   scope :progression, -> { where(category: %w[progression goal]) }
 

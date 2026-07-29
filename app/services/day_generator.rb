@@ -215,6 +215,7 @@ class DayGenerator
     day_specs.each_with_index.map do |spec, index|
       Day.new(
         week: week,
+        position: index,
         planned_vertical_distance: (day_specs[index].planned_vertical_distance),
         status: :upcoming
       )
