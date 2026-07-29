@@ -57,7 +57,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "randomize_days_with_sum distributes four days for low, mid, and high goal week recovery vert" do
     scenarios = [
-      { recovery_vert: 1_500.0, remainder: 600.0, label: "low" },
+      { recovery_vert: 1_500.0, remainder: 530.0, label: "low" },
       { recovery_vert: 3_600.0, remainder: 1_400.0, label: "mid" },
       { recovery_vert: 6_900.0, remainder: 2_760.0, label: "high" }
     ]

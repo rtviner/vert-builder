@@ -115,7 +115,7 @@ class DayGenerator
     end
 
     if remaining_units > count || remaining_units < -count
-      raise ArgumentError, "could not distribute total #{total} across #{count} items"
+      raise ArgumentError, "could not distribute total #{total} across #{count} items with max #{max}"
     end
 
     units.shuffle.map { |unit| unit * 10 }
@@ -194,6 +194,7 @@ class DayGenerator
     goal_day = goal_vertical_distance
 
     easy_4_days_total = recovery_vertical_distance - long_day - medium_day
+    debugger
     easy_4_days = randomize_days_with_sum(
         total: easy_4_days_total,
         count: 4,
