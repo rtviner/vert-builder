@@ -30,8 +30,10 @@ class UserTest < ActiveSupport::TestCase
         planned_duration: 100 + i * 10,
       )
     end
-    last_four_weeks = plan.weeks.order(end_date: :desc).limit(4)
-    expected_average = last_four_weeks.reduce(0) { |sum, week| sum + week.completed_vertical_distance } / 4
+
+    last_four_weeks = plan.weeks.progression.completed.order(end_date: :desc).limit(4)
+
+    expected_average = (last_four_weeks.sum(:completed_vertical_distance) / 4).round
     assert_equal expected_average, user.average_weekly_vertical_distance
   end
 
@@ -59,8 +61,8 @@ class UserTest < ActiveSupport::TestCase
         recovery_reduction_percentage: nil,
       )
     end
-    last_four_weeks = plan.weeks.order(end_date: :desc).limit(4)
-    expected_average = last_four_weeks.reduce(0) { |sum, week| sum + week.completed_duration } / 4
+    last_four_weeks = plan.weeks.progression.completed.order(end_date: :desc).limit(4)
+    expected_average = (last_four_weeks.sum(:completed_duration) / 4).round
     assert_equal expected_average, user.average_weekly_duration
   end
 end
