@@ -40,6 +40,15 @@ class WeekGenerator
 
   attr_reader :plan
 
+  def week_bounds(week_number)
+    return [ nil, nil ] if plan.start_date.nil?
+
+    start_date = plan.start_date.to_date + (week_number - 1) * 7
+    end_date   = start_date + 6
+
+    [ start_date, end_date ]
+  end
+
   def build_progression_week(week_number, previous_progression_week = nil)
     vertical_build_multiplier = 1 + plan.vertical_build_percentage / 100.0
     duration_build_multiplier = 1 + (Plan::MAX_PROGRESSION_PERCENTAGE - plan.vertical_build_percentage) / 100.0
@@ -60,6 +69,8 @@ class WeekGenerator
       ).round
     end
 
+    start_date, end_date = week_bounds(week_number)
+
     Week.new(
       plan: plan,
       week_number: week_number,
@@ -68,7 +79,9 @@ class WeekGenerator
       category: "progression",
       status: :planned,
       recovery_reduction_percentage: nil,
-      vertical_build_percentage: plan.vertical_build_percentage
+      vertical_build_percentage: plan.vertical_build_percentage,
+      start_date: start_date,
+      end_date: end_date
     )
   end
 
@@ -84,6 +97,8 @@ class WeekGenerator
       previous_progression_week.planned_duration * recovery_reduction_multiplier
     ).round
 
+    start_date, end_date = week_bounds(week_number)
+
     Week.new(
       plan: plan,
       week_number: week_number,
@@ -92,7 +107,9 @@ class WeekGenerator
       category: "recovery",
       status: :planned,
       recovery_reduction_percentage: RECOVERY_REDUCTION_PERCENTAGE,
-      vertical_build_percentage: nil
+      vertical_build_percentage: nil,
+      start_date: start_date,
+      end_date: end_date
     )
   end
 
@@ -105,6 +122,8 @@ class WeekGenerator
       final_progression_week.planned_duration * recovery_reduction_multiplier
     ).round
 
+    start_date, end_date = week_bounds(week_number)
+
     Week.new(
       plan: plan,
       week_number: week_number,
@@ -113,7 +132,9 @@ class WeekGenerator
       category: "taper",
       status: :planned,
       recovery_reduction_percentage: RECOVERY_REDUCTION_PERCENTAGE,
-      vertical_build_percentage: nil
+      vertical_build_percentage: nil,
+      start_date: start_date,
+      end_date: end_date
     )
   end
 
@@ -124,6 +145,8 @@ class WeekGenerator
     ).round(-1)
     planned_vertical_distance = recovery_vertical_distance + plan.goal_vertical_distance
 
+    start_date, end_date = week_bounds(week_number)
+
     Week.new(
       plan: plan,
       week_number: week_number,
@@ -132,7 +155,9 @@ class WeekGenerator
       category: "goal",
       status: :planned,
       recovery_reduction_percentage: GOAL_WEEK_REDUCTION_PERCENTAGE,
-      vertical_build_percentage: nil
+      vertical_build_percentage: nil,
+      start_date: start_date,
+      end_date: end_date
     )
   end
 

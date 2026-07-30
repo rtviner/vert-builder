@@ -139,9 +139,30 @@ class WeekGeneratorTest < ActiveSupport::TestCase
     assert_equal goal_week_expected_vertical_distance, goal_week.planned_vertical_distance
     assert_nil goal_week.planned_duration
   end
+  test "weeks have planned status and start/end dates when plan.start_date is present" do
+    plan = build_plan(start_date: Date.today)
+    weeks = generator(plan).build_weeks
+    assert_operator weeks.count, :>, 0
 
-  test "weeks have planned status and no start or end dates during generation" do
-    weeks = generator(build_plan).build_weeks
+    weeks.each do |week|
+      assert_equal "planned", week.status
+      assert_instance_of Date, week.start_date
+      assert_instance_of Date, week.end_date
+      expected_start = plan.start_date.to_date + (week.week_number - 1) * 7
+      expected_end   = expected_start + 6
+      assert_equal expected_start, week.start_date
+      assert_equal expected_end, week.end_date
+    end
+
+    weeks.sort_by(&:week_number).each_cons(2) do |prev, curr|
+      assert_equal prev.end_date + 1, curr.start_date
+    end
+  end
+
+  test "weeks have planned status and nil start and end dates when plan.start_date is nil" do
+    plan = build_plan(start_date: nil)
+    weeks = generator(plan).build_weeks
+    assert_operator weeks.count, :>, 0
 
     weeks.each do |week|
       assert_equal "planned", week.status
