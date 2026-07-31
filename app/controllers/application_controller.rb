@@ -2,11 +2,18 @@ class ApplicationController < ActionController::API
   include Authentication
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  rescue_from AASM::InvalidTransition, with: :invalid_transition
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
   rescue_from ActionController::ParameterMissing, with: :bad_request
 
   private
+
+  def invalid_transition(exception)
+    render json: {
+      error: { status: 422, message: "Validation failed", errors: [ exception.message ] }
+    }, status: :unprocessable_entity
+  end
 
   def not_found(exception)
     render json: {

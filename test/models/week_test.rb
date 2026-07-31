@@ -1,7 +1,7 @@
 require "test_helper"
 class WeekTest < ActiveSupport::TestCase
   setup do
-    @plan = plans(:user_one_planned)
+    @plan = plans(:user_two_planned)
     @week = Week.new(
       plan: @plan,
       week_number: 1,

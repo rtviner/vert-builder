@@ -58,6 +58,14 @@ class PlanTest < ActiveSupport::TestCase
     assert @plan.valid?
   end
 
+  test "an active plan cannot be activated again" do
+    @plan.status = :active
+    assert_raises(AASM::InvalidTransition) do
+      @plan.activate!
+      assert_includes plan.errors, "Event 'activate' cannot transition from 'active'"
+    end
+  end
+
   test "enums work" do
     assert_equal "every_other", @plan.recovery_pattern
     assert_equal "planned", @plan.status
@@ -97,5 +105,62 @@ class PlanTest < ActiveSupport::TestCase
     final_week = weeks(:week_eleven_user_two_active).week_number
     progress = (last_completed_week.to_f/final_week) * 100
     assert_equal progress.round, plan.progress_percentage
+  end
+
+  test "start_plan! raises an error when there is no start_date param and no start_date on record" do
+    plan = plans(:user_one_planned)
+    assert_raises(ArgumentError) do
+      plan.start_plan!
+      assert_includes plan.errors, "start_date is required"
+    end
+  end
+
+  test "start_plan! uses existing start_date and end_date for plan and weeks when no param passed" do
+    @plan.save!
+    4.times do |i|
+      @plan.weeks.create!(
+        week_number: i + 1,
+        category: i.even? ? :progression : :recovery,
+        start_date: @plan.start_date + (7 * i),
+        end_date: @plan.start_date + (7 * i) + 6,
+        status: :planned,
+        planned_duration: 100 + i+1,
+        vertical_build_percentage: @plan.vertical_build_percentage,
+        recovery_reduction_percentage: i.even? ? nil : 40
+      )
+    end
+
+    original_start_date = @plan.start_date
+    original_end_date = @plan.end_date
+    original_week_dates = @plan.weeks.map { |w| [ w.id, w.start_date, w.end_date ] }
+
+    @plan.start_plan!
+    @plan.reload
+
+    assert_equal original_start_date, @plan.start_date
+    assert_equal original_end_date, @plan.end_date
+    current_week_dates = @plan.weeks.map { |w| [ w.id, w.start_date, w.end_date ] }
+    assert_equal original_week_dates, current_week_dates
+    assert @plan.active?
+  end
+
+  test "start_plan! raises on malformed start_date string" do
+    plan = plans(:user_one_planned)
+
+    assert_raises(ArgumentError) { plan.start_plan!(start_date_param: "not-a-date") }
+  end
+  test "start_plan adds start date and end date to plan and all plan weeks and activates plan" do
+    plan = plans(:user_one_planned)
+    plan.start_plan!(start_date_param: "2026-08-03")
+    plan.reload
+
+    assert_equal Date.parse("2026-08-03"), plan.start_date
+    assert_not_nil plan.end_date
+    assert plan.active?
+    plan.weeks.each do |week|
+      expected_start = Date.parse("2026-08-03") + (week.week_number - 1) * 7
+      assert_equal expected_start, week.start_date
+      assert_equal expected_start + 6, week.end_date
+    end
   end
 end
