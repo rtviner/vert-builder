@@ -215,4 +215,18 @@ class DayGeneratorTest < ActiveSupport::TestCase
       assert days.all? { |day| (day.planned_vertical_distance % 10).zero? }
     end
   end
+
+  test "build_days handles a specific goal week shape with 4130 planned vertical distance" do
+    week = Week.new(
+      category: "goal",
+      planned_vertical_distance: 4130,
+    )
+
+    days = @generator.build_days(week, 2800)
+
+    assert_equal 7, days.count
+    assert days.all? { |day| day.status == "upcoming" }
+    assert_in_delta week.planned_vertical_distance, days.sum(&:planned_vertical_distance), 70
+    assert days.all? { |day| (day.planned_vertical_distance % 10).zero? }
+  end
 end
