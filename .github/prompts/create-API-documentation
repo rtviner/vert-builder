@@ -1,0 +1,92 @@
+# Prompt: Generate Public API Documentation
+
+You are writing **public-facing API documentation** for developers who will make HTTP requests to this app. You have access to the full app codebase. Find the actual routes, controllers/handlers, models, serializers, and validation logic in the code, and document what is actually implemented. If something is ambiguous or you can't find it in the code, flag it explicitly in an "Open Questions" section at the end rather than inventing details.
+
+## Setup steps (do these first)
+
+1. Locate the routing layer (e.g. `routes/`, `urls.py`, `config/routes.rb`, controller decorators, etc.) and list every endpoint related to: user registration, authentication/session handling, password updates, and plans (create, list, show single, activate).
+2. For each endpoint, find the corresponding handler/controller and trace:
+   - HTTP method + full path (including any API version prefix)
+   - Required vs optional request parameters, and their types
+   - Validation rules (e.g. min password length, email format, uniqueness constraints, allowed enum values)
+   - What the server returns on success (status code + response body shape)
+   - What the server returns on common failure cases (status code + error body shape) — e.g. validation errors, duplicate email, wrong password, unauthenticated request
+3. Find how sessions/auth are implemented (cookie-based session, JWT, bearer token, etc.) so you can document how the client stays authenticated after registering, and what header/cookie subsequent requests need.
+4. Find the `Plan` model/schema/controller to get the definitive list of fields, which are required at creation, which are optional, which are read-only/system-set (e.g. `id`, `created_at`), and any validation constraints (types, enums, min/max).
+
+## Documentation to produce
+
+Write the docs as a single Markdown document with this structure:
+
+### 1. Overview
+
+- Base URL (use a placeholder like `https://api.yourapp.com` if not hardcoded)
+- Authentication model in plain language (e.g. "session cookie set on login/registration" or "bearer token returned on login")
+- Standard response format and error format used across the API
+
+### 2. Register a new user
+
+- Endpoint, method
+- Request body: `email`, `password`, `password_confirmation` (confirm exact field names from code)
+- Validation rules (email format, password requirements, matching confirmation)
+- Note that a successful registration starts an authenticated session — explain exactly what the client receives (cookie? token in body?) and how to use it on later requests
+- Full example request (curl) and example success response
+- Example error responses (e.g. email already taken, passwords don't match, password too weak)
+
+### 3. Update password
+
+- Endpoint, method
+- Whether it requires the current password to confirm identity, or just an authenticated session
+- Request body fields (confirm exact names)
+- Auth requirement (must be logged in — show how the session/token is passed)
+- Example request and success/error responses
+
+### 4. Create a new plan
+
+- Endpoint, method
+- Auth requirement
+- Full table of fields: name, type, required/optional, default value if any, validation constraints (e.g. allowed values, max length, must be positive number)
+- Explicitly call out any fields the client must NOT send (server-controlled)
+- Example request and success response
+- Example validation error response
+
+### 5. List all plans
+
+- Endpoint, method
+- Auth requirement (public or authenticated?)
+- Any query params (pagination, filtering, sorting) — check the code for these
+- Example request and example response showing the shape of the array/list and any pagination metadata
+
+### 6. View a single plan by ID
+
+- Endpoint, method (e.g. `GET /plans/{id}`)
+- Auth requirement
+- Path parameter: `id` — type (integer/UUID/etc.), where it comes from (confirm from the route/model)
+- Example request and example success response showing the full plan object shape
+- Example error response for a plan ID that doesn't exist (404) and, if applicable, one that exists but belongs to another user (403/404)
+
+### 7. Activate a plan
+
+- Endpoint, method (e.g. `POST /plans/{id}/activate`)
+- Auth requirement
+- Path parameter: `id`
+- Request body: confirm from the code whether this endpoint takes any body params at all (e.g. an activation date, or nothing) — do not assume it's empty, check the handler
+- What "activate" actually changes in the code (e.g. a `status` or `active` field, whether it deactivates other plans as a side effect — check for this explicitly since it's a common pattern) and state that side effect clearly in the docs if present
+- Example request and example success response showing the updated plan object
+- Example error responses (e.g. plan not found, plan already active, plan can't be activated from its current state — check the code for any state-machine-like validation)
+
+### 8. Error handling reference
+
+- Table of HTTP status codes used across these endpoints and what each means in context
+
+### 9. Open Questions
+
+- Anything you could not confirm from the code (e.g. rate limits, token expiry, whether email verification is required) — list explicitly rather than guessing
+
+## Style requirements
+
+- **Every endpoint that accepts params (path, query, or body) must include a complete table of every param**, with: name, type, required or optional, default value (if any), and validation constraints. Do not list only the "interesting" params — list all of them, including ones the client must not send (server-controlled/read-only fields) and mark those clearly.
+- **Every endpoint must include a full example request** — not just a params table. For body-carrying endpoints this means a complete, realistic JSON body with every required field and at least one optional field filled in, plus a runnable `curl` example that sends that exact body (including headers needed for auth/content-type). For path/query-only endpoints, show the full URL with real-looking values substituted in.
+- Every example response must be valid, realistic JSON (or the actual response format used) pulled from what the code actually returns, not a generic guess.
+- Use tables for field/parameter lists, and follow each table with the full example request/response so a reader never has to piece together a request from the table alone.
+- Write for an external developer who has never seen the codebase — no internal jargon, file names, or implementation details unless directly relevant to how to call the API.
