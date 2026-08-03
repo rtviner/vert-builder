@@ -149,6 +149,7 @@ class PlanTest < ActiveSupport::TestCase
 
     assert_raises(ArgumentError) { plan.start_plan!(start_date_param: "not-a-date") }
   end
+
   test "start_plan adds start date and end date to plan and all plan weeks and activates plan" do
     plan = plans(:user_one_planned)
     plan.start_plan!(start_date_param: "2026-08-03")
