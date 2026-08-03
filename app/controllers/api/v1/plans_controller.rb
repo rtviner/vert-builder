@@ -1,4 +1,12 @@
 class Api::V1::PlansController < ApplicationController
+  def activate
+    plan = Current.user.plans.find(params[:id])
+    plan.start_plan!(start_date_param: params[:start_date])
+    render json: plan_detail(plan), status: :ok
+  rescue ArgumentError => e
+    render json: { error: { status: 400, message: "Bad request", detail: e.message } }, status: :bad_request
+  end
+
   def create
     plan = Current.user.plans.new(plan_params)
     result = PlanGenerator.new(plan).call

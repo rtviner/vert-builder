@@ -19,6 +19,27 @@ class Plan < ApplicationRecord
 
   scope :current_week, -> { joins(:weeks).merge(Week.in_progress).first }
 
+  include AASM
+
+  aasm column: :status, enum: true do
+    state :planned, initial: true
+    state :active
+    state :completed
+    state :abandoned
+
+    event :activate do
+      transitions from: :planned, to: :active
+    end
+
+    event :complete do
+      transitions from: :active, to: :completed
+    end
+
+    event :abandon do
+      transitions from: [ :planned, :active ], to: :abandoned
+    end
+  end
+
   def week_count
     weeks.count
   end
@@ -31,6 +52,26 @@ class Plan < ApplicationRecord
   def progress_percentage
     return 0 if weeks.count == 0
     ((weeks.completed.count.to_f / weeks.count) * 100).round
+  end
+
+  def start_plan!(start_date_param: nil)
+    resolved_start_date = start_date_param.present? ? Date.parse(start_date_param) : start_date
+
+    raise ArgumentError, "start_date is required" if resolved_start_date.nil?
+
+    transaction do
+      if start_date_param.present?
+        final_week_end_date = nil
+        weeks.each do |week|
+          week_start = resolved_start_date + (week.week_number - 1) * 7
+          week_end = week_start + 6
+          week.update!(start_date: week_start, end_date: week_end)
+          final_week_end_date = week_end
+        end
+        update!(start_date: resolved_start_date, end_date: final_week_end_date)
+      end
+        activate!
+    end
   end
 
   private

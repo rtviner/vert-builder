@@ -1,5 +1,86 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+week_one_user_one_planned:
+  plan: user_one_planned
+  week_number: 1
+  status: 0
+  planned_duration: 300
+  planned_vertical_distance: 2500
+  category: progression
+  vertical_build_percentage: 10
+
+week_two_user_one_planned:
+  plan: user_one_planned
+  week_number: 2
+  status: 0
+  planned_duration: 120
+  planned_vertical_distance: 1200
+  category: recovery
+  recovery_reduction_percentage: 40
+
+week_three_user_one_planned:
+  plan: user_one_planned
+  week_number: 3
+  status: 0
+  planned_duration: 320
+  planned_vertical_distance: 3500
+  category: progression
+  vertical_build_percentage: 10
+
+week_four_user_one_planned:
+  plan: user_one_planned
+  week_number: 4
+  status: 0
+  planned_duration: 150
+  planned_vertical_distance: 1700
+  category: recovery
+  recovery_reduction_percentage: 40
+
+week_five_user_one_planned:
+  plan: user_one_planned
+  week_number: 5
+  status: 0
+  planned_duration: 320
+  planned_vertical_distance: 4000
+  category: progression
+  vertical_build_percentage: 10
+
+week_six_user_one_planned:
+  plan: user_one_planned
+  week_number: 6
+  status: 0
+  planned_duration: 150
+  planned_vertical_distance: 1700
+  category: recovery
+  recovery_reduction_percentage: 40
+
+week_seven_user_one_planned:
+  plan: user_one_planned
+  week_number: 7
+  status: 0
+  planned_duration: 450
+  planned_vertical_distance: 4500
+  category: progression
+  vertical_build_percentage: 10
+
+week_eight_user_one_planned:
+  plan: user_one_planned
+  week_number: 8
+  status: 0
+  planned_duration: 210
+  planned_vertical_distance: 2250
+  category: recovery
+  recovery_reduction_percentage: 40
+
+week_nine_user_one_planned:
+  plan: user_one_planned
+  week_number: 9
+  status: 0
+  planned_duration: 520
+  planned_vertical_distance: 5200
+  category: progression
+  vertical_build_percentage: 10
+
 week_one_user_one_active:
   plan: user_one_active
   week_number: 1
@@ -11,6 +92,7 @@ week_one_user_one_active:
   planned_vertical_distance: 1000
   completed_vertical_distance: 1000
   category: progression
+  vertical_build_percentage: 10
 
 week_one_user_two_active:
   plan: user_two_active
@@ -23,6 +105,7 @@ week_one_user_two_active:
   planned_vertical_distance: 2162
   completed_vertical_distance: 1327
   category: progression
+  vertical_build_percentage: 10
 
 week_two_user_two_active:
   plan: user_two_active
@@ -35,6 +118,7 @@ week_two_user_two_active:
   planned_vertical_distance: 1297
   completed_vertical_distance: 1421
   category: recovery
+  recovery_reduction_percentage: 40
 
 week_three_user_two_active:
   plan: user_two_active
@@ -59,6 +143,7 @@ week_four_user_two_active:
   planned_vertical_distance: 1297
   completed_vertical_distance: 1333
   category: recovery
+  recovery_reduction_percentage: 40
 
 week_five_user_two_active:
   plan: user_two_active
@@ -71,6 +156,7 @@ week_five_user_two_active:
   planned_vertical_distance: 2378
   completed_vertical_distance: 2267
   category: progression
+  vertical_build_percentage: 10
 
 week_six_user_two_active:
   plan: user_two_active
@@ -83,6 +169,7 @@ week_six_user_two_active:
   planned_vertical_distance: 1427
   completed_vertical_distance: 1384
   category: recovery
+  recovery_reduction_percentage: 40
 
 week_seven_user_two_active:
   plan: user_two_active
@@ -95,6 +182,7 @@ week_seven_user_two_active:
   planned_vertical_distance: 2616
   completed_vertical_distance: 2668
   category: progression
+  vertical_build_percentage: 10
 
 week_eight_user_two_active:
   plan: user_two_active
@@ -107,6 +195,7 @@ week_eight_user_two_active:
   planned_vertical_distance: 1570
   completed_vertical_distance: 1452
   category: recovery
+  recovery_reduction_percentage: 40
 
 week_nine_user_two_active:
   plan: user_two_active
@@ -119,6 +208,7 @@ week_nine_user_two_active:
   planned_vertical_distance: 2878
   completed_vertical_distance: 0
   category: progression
+  vertical_build_percentage: 10
 
 week_ten_user_two_active:
   plan: user_two_active
@@ -131,6 +221,7 @@ week_ten_user_two_active:
   planned_vertical_distance: 1727
   completed_vertical_distance: 0
   category: recovery
+  recovery_reduction_percentage: 40
 
 week_eleven_user_two_active:
   plan: user_two_active
@@ -143,4 +234,5 @@ week_eleven_user_two_active:
   planned_vertical_distance: 3166
   completed_vertical_distance: 0
   category: progression
+  vertical_build_percentage: 10
   
