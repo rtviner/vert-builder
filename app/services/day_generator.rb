@@ -58,7 +58,9 @@ class DayGenerator
     true
   end
 
-  STEP_DOWN_TIERS = [ STEP_300_UNITS, STEP_200_UNITS, STEP_150_UNITS, STEP_90_UNITS, 0 ].freeze
+
+  TIER_UNITS = [ STEP_90_UNITS, STEP_150_UNITS, STEP_200_UNITS, STEP_300_UNITS, STEP_400_UNITS ].freeze
+  STEP_DOWN_TIERS = ([ 0 ] + TIER_UNITS).reverse.freeze
 
   def step_down_to_balance(units, baseline_units, remaining_units)
     tiers = STEP_DOWN_TIERS.select { |tier| tier < baseline_units }
@@ -78,6 +80,12 @@ class DayGenerator
     remaining_units
   end
 
+  def next_tier_gap(current)
+    next_tier = TIER_UNITS.find { |t| t > current }
+    next_tier ? next_tier - current : nil
+  end
+
+
   def randomize_days_with_sum(total:, count:, max:)
     raise ArgumentError, "count must be positive" if count <= 0
 
@@ -91,27 +99,19 @@ class DayGenerator
     # Step down pass: walk down through all step tiers until remaining_units >= 0
     remaining_units =  step_down_to_balance(units, baseline_units, remaining_units) unless remaining_units >= 0
 
-    # Step up: only items at 150 or above, never touch 90 or 0
+    # step up pass: step up to next tier if possible, otherwise randomize within max and remaining_units
     while remaining_units > 0
-      candidates = units.each_index.select { |i| units[i] >= STEP_150_UNITS && units[i] < max_units }
+      candidates = units.each_index.select { |i| units[i] < max_units && units[i] >= STEP_90_UNITS }
       break if candidates.empty?
 
       idx = candidates.sample
-      step = [ rand(1..5), max_units - units[idx], remaining_units ].min
+      gap = next_tier_gap(units[idx])
+      desired_step = gap || rand(1..6)
+      room = max_units - units[idx]
+      step = [ desired_step, room, remaining_units ].min
+
       units[idx] += step
       remaining_units -= step
-    end
-
-    # Fallback: allow one 90 to absorb remainder if it lands in the 90-150 gap
-    # zero days are never touched
-    if remaining_units > 0
-      candidates = units.each_index.select { |i| units[i] == STEP_90_UNITS && units[i] < max_units }
-      unless candidates.empty?
-        idx = candidates.sample
-        step = [ remaining_units, max_units - units[idx] ].min
-        units[idx] += step
-        remaining_units -= step
-      end
     end
 
     if remaining_units > count || remaining_units < -count
@@ -192,13 +192,14 @@ class DayGenerator
     long_day = (recovery_vertical_distance * 0.40).round(-1)
     medium_day = (recovery_vertical_distance * 0.20).round(-1)
     goal_day = goal_vertical_distance
+    max_easy = recovery_vertical_distance * MAX_EASY_PERCENTAGE
 
     easy_4_days_total = recovery_vertical_distance - long_day - medium_day
-    debugger
+
     easy_4_days = randomize_days_with_sum(
         total: easy_4_days_total,
         count: 4,
-        max: recovery_vertical_distance * MAX_EASY_PERCENTAGE
+        max: max_easy
       )
 
     [

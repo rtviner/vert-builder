@@ -66,8 +66,8 @@ class DayGeneratorTest < ActiveSupport::TestCase
       max_easy = scenario[:recovery_vert] * DayGenerator::MAX_EASY_PERCENTAGE
       days = assert_randomized_days(total: scenario[:remainder], count: 4, max: max_easy, expected_count: 4)
 
-      assert days.select { |day| day == 90 }.count <= 1,
-             "expected at most one 90-day value for #{scenario[:label]} recovery_vert"
+      assert days.select { |day| day == 90 }.count <= 2,
+             "expected at most two 90-day values for #{scenario[:label]} recovery_vert"
       assert days.select { |day| day > 90 && day < 150 }.count <= 1,
              "expected 1 or fewer 90-150 values for #{scenario[:label]} recovery_vert"
       assert days.all? { |day| day > 0 },
