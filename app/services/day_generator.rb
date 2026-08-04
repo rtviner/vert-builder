@@ -105,11 +105,9 @@ class DayGenerator
       break if candidates.empty?
 
       idx = candidates.sample
-      gap = next_tier_gap(units[idx])
-      desired_step = gap || rand(1..6)
-      room = max_units - units[idx]
-      step = [ desired_step, room, remaining_units ].min
-
+      step_to_next_tier = next_tier_gap(units[idx])
+      step_ceiling = [ max_units - units[idx], remaining_units ].min
+      step = step_to_next_tier ? [ step_to_next_tier, step_ceiling ].min : rand(1..step_ceiling)
       units[idx] += step
       remaining_units -= step
     end
