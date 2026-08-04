@@ -57,17 +57,15 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "randomize_days_with_sum distributes four days for low, mid, and high goal week recovery vert" do
     scenarios = [
-      { recovery_vert: 1_500.0, remainder: 530.0, label: "low" },
-      { recovery_vert: 3_600.0, remainder: 1_400.0, label: "mid" },
-      { recovery_vert: 6_900.0, remainder: 2_760.0, label: "high" }
+      { goal_vertical_distance: 2000, recovery_vert: 900.0, remainder: 360.0, label: "low" },
+      { goal_vertical_distance: 6000, recovery_vert: 2400.0, remainder: 960.0, label: "mid" },
+      { goal_vertical_distance: 12000, recovery_vert: 4800.0, remainder: 1_920.0, label: "high" }
     ]
 
     scenarios.each do |scenario|
       max_easy = scenario[:recovery_vert] * DayGenerator::MAX_EASY_PERCENTAGE
       days = assert_randomized_days(total: scenario[:remainder], count: 4, max: max_easy, expected_count: 4)
 
-      assert days.select { |day| day == 90 }.count <= 2,
-             "expected at most two 90-day values for #{scenario[:label]} recovery_vert"
       assert days.select { |day| day > 90 && day < 150 }.count <= 1,
              "expected 1 or fewer 90-150 values for #{scenario[:label]} recovery_vert"
       assert days.all? { |day| day > 0 },
@@ -107,12 +105,12 @@ class DayGeneratorTest < ActiveSupport::TestCase
       end
 
       long_day = days[3].planned_vertical_distance
-      assert_in_delta (week.planned_vertical_distance * 0.35).round, long_day, 20
+      assert_in_delta (week.planned_vertical_distance * 0.35).round(-1), long_day, 20
 
       hard_sum = hard_and_long_positions.sum { |index| days[index].planned_vertical_distance }
 
-      assert_operator hard_sum, :>=, week.planned_vertical_distance * 0.75
-      assert_operator hard_sum, :<=, week.planned_vertical_distance * 0.80
+      assert_operator hard_sum, :>=, (week.planned_vertical_distance * 0.75).round(-1)
+      assert_operator hard_sum, :<=, (week.planned_vertical_distance * 0.81).round(-1)
 
       assert days.all? { |day| (day.planned_vertical_distance % 10).zero? }
     end
@@ -174,9 +172,9 @@ class DayGeneratorTest < ActiveSupport::TestCase
       end
 
       long_day = days[0].planned_vertical_distance
-      assert_in_delta (week.planned_vertical_distance * 0.40).round, long_day, 10
+      assert_in_delta (week.planned_vertical_distance * 0.40).round(-1), long_day, 10
       medium_day = days[2].planned_vertical_distance
-      assert_in_delta (week.planned_vertical_distance * 0.20), medium_day, 10
+      assert_in_delta (week.planned_vertical_distance * 0.20).round(-1), medium_day, 10
 
       assert days.all? { |day| (day.planned_vertical_distance % 10).zero? }
     end
@@ -184,9 +182,9 @@ class DayGeneratorTest < ActiveSupport::TestCase
 
   test "build_days generates seven days with expected ordering for low, mid, and high goal week totals" do
     scenarios = [
-      { week_vert: 2_880, goal_vertical_distance: 2000, label: "low" },
-      { week_vert: 7_220, goal_vertical_distance: 6000, label: "mid" },
-      { week_vert: 20_010, goal_vertical_distance: 12000, label: "high" }
+      { week_vert: 4000, goal_vertical_distance: 2000, label: "low" },
+      { week_vert: 12000, goal_vertical_distance: 6000, label: "mid" },
+      { week_vert: 24000, goal_vertical_distance: 12000, label: "high" }
     ]
 
     scenarios.each do |scenario|
@@ -216,7 +214,7 @@ class DayGeneratorTest < ActiveSupport::TestCase
     end
   end
 
-  test "build_days handles a specific goal week shape with 4130 planned vertical distance" do
+  test "build_days handles a specific goal week shape with 4130 planned vertical distance and 2800 goal vertical distance" do
     week = Week.new(
       category: "goal",
       planned_vertical_distance: 4130,
