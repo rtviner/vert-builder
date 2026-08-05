@@ -15,6 +15,7 @@ class Plan < ApplicationRecord
     numericality: { greater_than: :baseline_vertical_distance },
     if: -> { baseline_vertical_distance.present? }
   validates :start_date, :end_date, presence: true, unless: -> { planned? }
+  validates :end_date, presence: true, if: -> { flexible_end_date? == false }
   validate :end_date_after_start_date, if: -> { start_date.present? && end_date.present? }
 
   scope :current_week, -> { joins(:weeks).merge(Week.in_progress).first }

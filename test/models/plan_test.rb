@@ -47,6 +47,23 @@ class PlanTest < ActiveSupport::TestCase
     assert_not @plan.valid?
   end
 
+  test "invalid if flexible end date false and no end date" do
+    @plan.flexible_end_date = false
+    @plan.end_date = nil
+    assert_not @plan.valid?
+  end
+
+  test "valid if flexible end date true and no end date" do
+    @plan.flexible_end_date = true
+    @plan.end_date = nil
+    assert @plan.valid?
+  end
+
+  test "invalid if baseline_vertical_distance < MINIMUM_BASELINE_VERT" do
+    @plan.baseline_vertical_distance = Plan::MINIMUM_BASELINE_VERT - 1
+    assert_not @plan.valid?
+  end
+
   test "plan status transitions" do
     @plan.status = :active
     assert @plan.active?
