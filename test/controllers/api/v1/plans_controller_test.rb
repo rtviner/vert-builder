@@ -134,8 +134,24 @@ class Api::V1::PlansControllerTest < ActionDispatch::IntegrationTest
           goal_vertical_distance: 3300,
           vertical_build_percentage: 10,
           flexible_end_date: true,
-          start_date: Date.today,
-          end_date: Date.today + 12.weeks
+          start_date: Date.today
+        }
+      },
+      headers: auth_headers(@user)
+    end
+    assert_response :success
+  end
+
+  test "CREATE creates a new plan for the current user with flexible end date false" do
+    assert_changes -> { Plan.count } do
+      post api_v1_plans_url, params: {
+        plan: {
+          baseline_vertical_distance: 1624,
+          baseline_duration: 180,
+          goal_vertical_distance: 3300,
+          vertical_build_percentage: 10,
+          flexible_end_date: false,
+          end_date: Date.today + 20.weeks
         }
       },
       headers: auth_headers(@user)
@@ -168,9 +184,25 @@ class Api::V1::PlansControllerTest < ActionDispatch::IntegrationTest
           goal_duration: 0,
           recovery_pattern: :every_other,
           vertical_build_percentage: 10,
-          flexible_end_date: true,
-          start_date: Date.today,
-          end_date: Date.today + 12.weeks
+          flexible_end_date: true
+        }
+      },
+      headers: auth_headers(@user)
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "CREATE should not create a plan without an end date when flexible_end_date is false" do
+    assert_no_difference("Plan.count") do
+      post api_v1_plans_url, params: {
+        plan: {
+          baseline_vertical_distance: 1624,
+          baseline_duration: 180,
+          goal_vertical_distance: nil,
+          goal_duration: 0,
+          recovery_pattern: :every_other,
+          vertical_build_percentage: 10,
+          flexible_end_date: false
         }
       },
       headers: auth_headers(@user)
