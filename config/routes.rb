@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :plans, only: %i[create index show] do
-        patch :activate, on: :member
+        member do
+          patch :activate
+          get :export_csv
+        end
       end
       resource :session
       resources :passwords, only: %i[ update]

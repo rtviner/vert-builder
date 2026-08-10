@@ -53,3 +53,5 @@ gem "minitest-mock", "~> 5.27"
 gem "mocha", "~> 3.1"
 
 gem "aasm", "~> 6.0"
+
+gem "csv", "~> 3.3"

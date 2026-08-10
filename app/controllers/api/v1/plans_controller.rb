@@ -17,6 +17,12 @@ class Api::V1::PlansController < ApplicationController
     end
   end
 
+  def export_csv
+    plan = Current.user.plans.includes(weeks: :days).find(params[:id])
+    csv_data = PlanCsvExporter.new(plan).call
+    send_data csv_data, filename: "plan_#{plan.id}_#{Date.today}.csv", type: "text/csv"
+  end
+
   def index
     plans = Current.user.plans
 
