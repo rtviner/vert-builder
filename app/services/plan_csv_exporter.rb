@@ -83,7 +83,11 @@ class PlanCsvExporter
 
   def format_date_range(start_date, end_date)
     return "" unless start_date && end_date
-    "#{start_date.strftime('%b %-d')}–#{end_date.strftime('%b %-d')}"
+    if start_date.strftime("%b") == end_date.strftime("%b")
+      "#{start_date.strftime('%b %-d')}–#{end_date.strftime('%-d')}"
+    else
+      "#{start_date.strftime('%b %-d')}–#{end_date.strftime('%b %-d')}"
+    end
   end
 
   def format_duration(minutes)

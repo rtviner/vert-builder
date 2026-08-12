@@ -37,12 +37,21 @@ class PlanCsvExporterTest < ActiveSupport::TestCase
   end
 
   test "formats dates as a range when start_date and end_date are present" do
+    @plan.weeks.first.update!(week_number: 1, category: :progression, start_date: Date.new(2026, 8, 31), end_date: Date.new(2026, 9, 6))
+
+    csv = CSV.parse(@exporter.call)
+
+    assert_equal "Aug 31–Sep 6", csv[1][1]
+  end
+
+  test "Does not duplicate month name when start and end dates are in the same month" do
     @plan.weeks.first.update!(week_number: 1, category: :progression, start_date: Date.new(2026, 11, 10), end_date: Date.new(2026, 11, 16))
 
     csv = CSV.parse(@exporter.call)
 
-    assert_equal "Nov 10–Nov 16", csv[1][1]
+    assert_equal "Nov 10–16", csv[1][1]
   end
+
 
   test "renders blank dates when a week has no start_date or end_date" do
     @plan.weeks.first.update!(start_date: nil, end_date: nil, status: :planned)
