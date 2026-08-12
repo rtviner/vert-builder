@@ -78,6 +78,75 @@ class PlanCsvExporterTest < ActiveSupport::TestCase
     assert_equal "2", csv[3][0] # row 2 is the blank separator after week 1
   end
 
+  # --- format: :weeks ---
+
+  test "weeks format includes the header row" do
+    csv = CSV.parse(@exporter.call(format: :weeks))
+
+    assert_equal [ "start", "type", "mi", "planned gain", "gain", "IL", "hours", "planned hours" ], csv.first
+  end
+
+  test "weeks format writes one row per week with start date, type, planned gain, and planned hours and leaves manual-fill columns blank" do
+    @plan.weeks.first.update!(
+      planned_vertical_distance: 1624, planned_duration: 351,
+      start_date: Date.new(2026, 11, 10), end_date: Date.new(2026, 11, 16))
+
+    csv = CSV.parse(@exporter.call(format: :weeks))
+    row = csv[1]
+
+    assert_equal "11/10", row[0] # start date
+    assert_equal "Progression", row[1]  # type
+    assert_nil row[2]  # mi
+    assert_equal "1624", row[3] # planned gain
+    assert_nil row[4]  # gain
+    assert_nil row[5]  # IL
+    assert_nil row[6]  # hours
+    assert_equal "5h 51m", row[7] # planned hours
+  end
+
+  # --- format: :days ---
+
+  test "days format includes the header row" do
+    csv = csv = CSV.parse(@exporter.call(format: :days))
+
+    assert_equal [ "day", "date", "notes", "Y", "R", "S", "B", "body", "planned gain", "%run", "\"run" ], csv.first
+  end
+
+  test "days format writes day label, date, and planned gain when week has a start_date and leaves manual-fill columns blank" do
+    week = @plan.weeks.first
+    week.update!(start_date: Date.new(2026, 11, 10), end_date: Date.new(2026, 11, 16))
+    week.days.each { |day| day.update!(planned_vertical_distance: 90) }
+
+    csv = csv = CSV.parse(@exporter.call(format: :days))
+    row = csv[1]
+
+    assert_equal "Tue", row[0]
+    assert_equal "11/10", row[1]
+    assert_nil row[2] # notes
+    assert_nil row[3] # Y
+    assert_nil row[4] # R
+    assert_nil row[5] # S
+    assert_nil row[6] # B
+    assert_nil row[7] # body
+    assert_equal "90", row[8]
+    assert_nil row[9] # %run
+    assert_nil row[10] # "run
+  end
+
+  test "days format writes rows for every day across all weeks in order" do
+    days_count = @plan.weeks.sum { |week| week.days.count }
+
+    csv = csv = CSV.parse(@exporter.call(format: :days))
+
+    assert_equal days_count, csv.size - 1 # minus header
+  end
+
+  # --- invalid format ---
+
+  test "raises ArgumentError for an unrecognized format" do
+    assert_raises(ArgumentError) { PlanCsvExporter.new(@plan).call(format: :bogus) }
+  end
+
   private
 
   def week_attrs(overrides = {})

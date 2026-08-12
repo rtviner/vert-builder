@@ -19,8 +19,11 @@ class Api::V1::PlansController < ApplicationController
 
   def export_csv
     plan = Current.user.plans.includes(weeks: :days).find(params[:id])
-    csv_data = PlanCsvExporter.new(plan).call
-    send_data csv_data, filename: "plan_#{plan.id}_#{Date.today}.csv", type: "text/csv"
+    format = params[:format].presence&.to_sym || :full
+    csv_data = PlanCsvExporter.new(plan).call(format: format)
+    send_data csv_data, filename: "plan_#{plan.id}_#{format}_#{Date.today}.csv", type: "text/csv"
+  rescue ArgumentError => e
+    render json: { error: { status: 400, message: "Bad request", detail: e.message } }, status: :bad_request
   end
 
   def index
