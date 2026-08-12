@@ -223,6 +223,76 @@ class Api::V1::PlansControllerTest < ActionDispatch::IntegrationTest
     assert_includes ids, planned_plan.id
   end
 
+  test "GET export_csv returns a CSV file with default full format" do
+    user = users(:two)
+    plan = plans(:user_two_active)
+
+    get export_csv_api_v1_plan_path(plan), headers: auth_headers(user)
+
+    assert_response :success
+    assert_equal "text/csv", response.media_type
+  end
+
+  test "GET export_csv accepts a weeks format param" do
+    user = users(:two)
+    plan = plans(:user_two_active)
+
+    get export_csv_api_v1_plan_path(plan), params: { format: "weeks" },
+      headers: auth_headers(user)
+
+    assert_response :success
+    csv = CSV.parse(response.body)
+    assert_equal [ "start", "type", "mi", "planned gain", "gain", "IL", "hours", "planned hours" ], csv.first
+  end
+
+  test "GET export_csv accepts a days format param" do
+    user = users(:two)
+    plan = plans(:user_two_active)
+
+    get export_csv_api_v1_plan_path(plan), params: { format: "days" },
+      headers: auth_headers(user)
+
+    assert_response :success
+    csv = CSV.parse(response.body)
+    assert_equal [ "day", "date", "notes", "Y", "R", "S", "B", "body", "planned gain", "%run", "\"run" ], csv.first
+  end
+
+  test "GET export_csv returns 400 for an invalid format param" do
+    user = users(:two)
+    plan = plans(:user_two_active)
+
+    get export_csv_api_v1_plan_path(plan), params: { format: "bogus" },
+      headers: auth_headers(user)
+
+    assert_response :bad_request
+  end
+
+  test "GET export_csv sets a filename with the plan id and format" do
+    user = users(:two)
+    plan = plans(:user_two_active)
+
+    get export_csv_api_v1_plan_path(plan), params: { format: "weeks" },
+      headers: auth_headers(user)
+
+    assert_match(/plan_#{plan.id}_weeks_#{Date.today}\.csv/, response.headers["Content-Disposition"])
+  end
+
+  test "GET export_csv returns 404 for another user's plan" do
+    other_users_plan = plans(:user_two_planned)
+
+    get export_csv_api_v1_plan_path(other_users_plan), headers: auth_headers(@user)
+
+    assert_response :not_found
+  end
+
+  test "GET export_csv requires authentication" do
+    plan = plans(:user_one_planned)
+
+    get export_csv_api_v1_plan_path(plan)
+
+    assert_response :unauthorized
+  end
+
   test "INDEX filters plans by status" do
     active_plan = plans(:user_one_active)
     planned_plan = plans(:user_one_planned)
