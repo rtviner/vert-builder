@@ -452,104 +452,9 @@ Status: `404 Not Found`
 }
 ```
 
-## 7. Export a plan as CSV
+## 7. Activate a plan
 
-### Endpoint
-
-- `GET /api/v1/plans/:id/export_csv`
-
-### Auth requirement
-
-- Requires authentication via `Authorization: Bearer <token>`.
-
-### Path parameter
-
-| Name | Type    | Required | Notes                             |
-| ---- | ------- | -------- | --------------------------------- |
-| `id` | integer | yes      | Plan record ID from the database. |
-
-### Query parameters
-
-| Name     | Type   | Required | Default | Notes                                                |
-| -------- | ------ | -------- | ------- | ---------------------------------------------------- |
-| `format` | string | optional | `full`  | CSV format. Allowed values: `full`, `weeks`, `days`. |
-
-### Behavior
-
-- Returns the requested plan as a CSV file.
-- The default format is `full` when the `format` query parameter is omitted.
-- The response is sent as `text/csv` with a filename like `plan_<id>_<format>_<date>.csv`.
-
-### Example request
-
-```bash
-curl -X GET "https://api.yourapp.com/api/v1/plans/42/export_csv" \
-  -H "Authorization: Bearer <auth_token>"
-```
-
-### Example response
-
-Status: `200 OK`
-
-- Content-Type: `text/csv`
-- Response body: CSV text
-
-Example first CSV header row for the default `full` format:
-
-```csv
-Week,Dates,Type,Weekly Vert (ft),Time Cap,Mon,Tue,Wed,Thu,Fri,Sat,Sun
-```
-
-### Example query variations
-
-- Full plan CSV:
-  - `/api/v1/plans/42/export_csv`
-- Week summary CSV:
-  - `/api/v1/plans/42/export_csv?format=weeks`
-- Day list CSV:
-  - `/api/v1/plans/42/export_csv?format=days`
-
-### Example error responses
-
-- Invalid format:
-
-Status: `400 Bad Request`
-
-```json
-{
-  "error": {
-    "status": 400,
-    "message": "Bad request",
-    "detail": "format must be one of: full, weeks, days"
-  }
-}
-```
-
-- Plan not found or not owned by user:
-
-Status: `404 Not Found`
-
-```json
-{
-  "error": {
-    "status": 404,
-    "message": "Resource not found",
-    "detail": "Couldn't find Plan"
-  }
-}
-```
-
-- Unauthorized:
-
-Status: `401 Unauthorized`
-
-```json
-{
-  "error": "Unauthorized"
-}
-```
-
-## 8. Activate a plan
+Adds dates to a plan if it was not created with a start date
 
 ### Endpoint
 
@@ -669,7 +574,104 @@ Status: `404 Not Found`
 }
 ```
 
-## 8. Error handling reference
+## 8. Export a plan as CSV
+
+### Endpoint
+
+- `GET /api/v1/plans/:id/export_csv`
+
+### Auth requirement
+
+- Requires authentication via `Authorization: Bearer <token>`.
+
+### Path parameter
+
+| Name | Type    | Required | Notes                             |
+| ---- | ------- | -------- | --------------------------------- |
+| `id` | integer | yes      | Plan record ID from the database. |
+
+### Query parameters
+
+| Name     | Type   | Required | Default | Notes                                                |
+| -------- | ------ | -------- | ------- | ---------------------------------------------------- |
+| `format` | string | optional | `full`  | CSV format. Allowed values: `full`, `weeks`, `days`. |
+
+### Behavior
+
+- Returns the requested plan as a CSV file.
+- The default format is `full` when the `format` query parameter is omitted.
+- The response is sent as `text/csv` with a filename like `plan_<id>_<format>_<date>.csv`.
+
+### Example request
+
+```bash
+curl -X GET "https://api.yourapp.com/api/v1/plans/42/export_csv" \
+  -H "Authorization: Bearer <auth_token>"
+```
+
+### Example response
+
+Status: `200 OK`
+
+- Content-Type: `text/csv`
+- Response body: CSV text
+
+Example first CSV header row for the default `full` format:
+
+```csv
+Week,Dates,Type,Weekly Vert (ft),Time Cap,Mon,Tue,Wed,Thu,Fri,Sat,Sun
+```
+
+### Example query variations
+
+- Full plan CSV:
+  - `/api/v1/plans/42/export_csv`
+- Week summary CSV:
+  - `/api/v1/plans/42/export_csv?format=weeks`
+- Day list CSV:
+  - `/api/v1/plans/42/export_csv?format=days`
+
+### Example error responses
+
+- Invalid format:
+
+Status: `400 Bad Request`
+
+```json
+{
+  "error": {
+    "status": 400,
+    "message": "Bad request",
+    "detail": "format must be one of: full, weeks, days"
+  }
+}
+```
+
+- Plan not found or not owned by user:
+
+Status: `404 Not Found`
+
+```json
+{
+  "error": {
+    "status": 404,
+    "message": "Resource not found",
+    "detail": "Couldn't find Plan"
+  }
+}
+```
+
+- Unauthorized:
+
+Status: `401 Unauthorized`
+
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+## 9. Error handling reference
 
 | HTTP Status                 | Meaning                                                                       |
 | --------------------------- | ----------------------------------------------------------------------------- |
