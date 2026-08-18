@@ -14,9 +14,7 @@ class PlanGenerator
   def call
     @weeks = WeekGenerator.new(plan).build_weeks
 
-    if @weeks.empty?
-      return PlanResult.new(false, plan)
-    end
+    return PlanResult.new(false, plan) if @weeks.empty?
 
     @weeks.each do |week|
       days.concat(DayGenerator.new.build_days(week, plan.goal_vertical_distance))

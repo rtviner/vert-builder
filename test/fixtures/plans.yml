@@ -17,6 +17,8 @@ user_one_active:
   goal_duration: 250
   vertical_build_percentage: 10
   status: active
+  start_date: 2026-05-18
+  end_date: 2026-05-24
 
 user_one_completed:
   user: one
@@ -52,6 +54,8 @@ user_two_active:
   goal_vertical_distance: 3300
   vertical_build_percentage: 10
   status: active
+  start_date: 2026-05-11
+  end_date: 2026-07-26
 
 user_two_completed:
   user: two

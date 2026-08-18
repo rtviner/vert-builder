@@ -75,6 +75,10 @@ class Plan < ApplicationRecord
     end
   end
 
+  def extendable?
+    start_date.present? && end_date.present?
+  end
+
   private
 
   def end_date_after_start_date

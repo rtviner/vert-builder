@@ -2,18 +2,21 @@ class WeekGenerator
   RECOVERY_REDUCTION_PERCENTAGE = 40
   GOAL_WEEK_REDUCTION_PERCENTAGE = 60
 
-  def initialize(plan)
+  def initialize(plan, starting_week_number: 1, starting_progression_weeks: [], target_end_date: nil)
     @plan = plan
+    @starting_week_number = starting_week_number
+    @starting_progression_weeks = starting_progression_weeks
+    @target_end_date = target_end_date
   end
 
   def build_weeks
     return [] unless plan.valid?
 
     weeks = []
-    progression_weeks = []
-    week_number = 1
+    progression_weeks = starting_progression_weeks.dup
+    week_number = starting_week_number
 
-    until goal_condition_met?(progression_weeks)
+    until stop_generating?(progression_weeks)
       week = if recovery_week?(week_number)
                build_recovery_week(week_number, progression_weeks.last)
       else
@@ -38,7 +41,7 @@ class WeekGenerator
 
   private
 
-  attr_reader :plan
+  attr_reader :plan, :starting_week_number, :starting_progression_weeks, :target_end_date
 
   def week_bounds(week_number)
     return [ nil, nil ] if plan.start_date.nil?
@@ -171,9 +174,26 @@ class WeekGenerator
     end
   end
 
-  def goal_condition_met?(progression_weeks)
+  def stop_generating?(progression_weeks)
     return false if progression_weeks.length < 2
 
+    if target_end_date
+      goal_condition_met?(progression_weeks) && target_date_reached?(progression_weeks)
+    else
+      goal_condition_met?(progression_weeks)
+    end
+  end
+
+  def target_date_reached?(progression_weeks)
+    last_progression_week = progression_weeks.last
+    taper_week_start = last_progression_week.end_date + 1
+    taper_week_end = taper_week_start + 6
+    goal_week_start = taper_week_end + 1
+    goal_week_end = goal_week_start + 6
+    goal_week_end >= target_end_date
+  end
+
+  def goal_condition_met?(progression_weeks)
     progression_weeks.last(2).all? { |week| week.planned_vertical_distance >= plan.goal_vertical_distance }
   end
 end
