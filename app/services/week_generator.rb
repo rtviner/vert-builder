@@ -174,7 +174,6 @@ class WeekGenerator
   def goal_condition_met?(progression_weeks)
     return false if progression_weeks.length < 2
 
-    progression_weeks.last(2).length == 2 &&
-      progression_weeks.last(2).all? { |week| week.planned_vertical_distance >= plan.goal_vertical_distance }
+    progression_weeks.last(2).all? { |week| week.planned_vertical_distance >= plan.goal_vertical_distance }
   end
 end
