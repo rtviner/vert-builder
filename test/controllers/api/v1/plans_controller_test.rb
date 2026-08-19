@@ -95,21 +95,32 @@ class Api::V1::PlansControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "CREATE propagates errors when day generation fails" do
-    assert_no_difference("Plan.count") do
-      post api_v1_plans_url, params: {
-        plan: {
-          baseline_vertical_distance: 1000,
-          baseline_duration: 180,
-          goal_vertical_distance: 3300,
-          vertical_build_percentage: 5
-        }
-      },
-      headers: auth_headers(@user)
-    end
-    assert_response :unprocessable_entity
-    assert_includes response.body, "Day generation failed: could not distribute total 250.0 across 5 items"
+ test "CREATE propagates errors when day generation fails" do
+  error_message = "Day generation failed: could not distribute total 250.0 across 5 items"
+
+  failing_day_generator = Object.new
+  failing_day_generator.define_singleton_method(:build_days) do |*_args|
+    raise ArgumentError, error_message # Use DayGenerator::Error if custom
   end
+
+
+    DayGenerator.stub :new, ->(*_args) { failing_day_generator } do
+      assert_no_difference("Plan.count") do
+        post api_v1_plans_url, params: {
+          plan: {
+            baseline_vertical_distance: 1000,
+            baseline_duration: 180,
+            goal_vertical_distance: 3300
+          }
+        },
+        headers: auth_headers(@user)
+      end
+
+      assert_response :unprocessable_entity
+      assert_includes response.body, error_message
+    end
+  end
+
   test "CREATE creates a new plan for the current user with a high goal vertical distance" do
     assert_changes -> { Plan.count } do
       post api_v1_plans_url, params: {
