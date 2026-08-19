@@ -50,8 +50,10 @@ class WeekGenerator
   end
 
   def build_progression_week(week_number, previous_progression_week = nil)
-    vertical_build_multiplier = 1 + plan.vertical_build_percentage / 100.0
-    duration_build_multiplier = 1 + (Plan::MAX_PROGRESSION_PERCENTAGE - plan.vertical_build_percentage) / 100.0
+    vertical_build_range = (previous_progression_week.nil? && plan.baseline_vertical_distance == Plan::MINIMUM_BASELINE_VERT) ? 10..13 : 5..13
+    week_vertical_build_percentage = rand(vertical_build_range)
+    vertical_build_multiplier = 1 + week_vertical_build_percentage / 100.0
+    duration_build_multiplier = 1 + (Plan::MAX_PROGRESSION_PERCENTAGE - week_vertical_build_percentage) / 100.0
 
     if previous_progression_week.present?
       planned_vertical_distance = (
@@ -79,7 +81,7 @@ class WeekGenerator
       category: "progression",
       status: :planned,
       recovery_reduction_percentage: nil,
-      vertical_build_percentage: plan.vertical_build_percentage,
+      vertical_build_percentage: week_vertical_build_percentage,
       start_date: start_date,
       end_date: end_date
     )

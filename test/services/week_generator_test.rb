@@ -50,15 +50,21 @@ class WeekGeneratorTest < ActiveSupport::TestCase
     assert_equal "goal", ordered_weeks.last.category
   end
 
-  test "progression weeks calculate vertical distance and duration from the previous progression week and the vertical build percentage" do
-    plan = build_plan(vertical_build_percentage: 10)
+  test "progression weeks calculate vertical distance and duration from the previous progression week and random vertical build percentages" do
+    plan = build_plan
     weeks = generator(plan).build_weeks
     progression_weeks = weeks.select { |week| week.category == "progression" }
 
+    first_week = progression_weeks.first
+    assert_includes 5..13, first_week.vertical_build_percentage
+
     progression_weeks.each_cons(2) do |previous_week, current_week|
-      expected_vertical_distance = (previous_week.planned_vertical_distance * (1 + plan.vertical_build_percentage / 100.0)).round(-1)
+      assert_includes 5..13, current_week.vertical_build_percentage
+
+      build_percentage = current_week.vertical_build_percentage
+      expected_vertical_distance = (previous_week.planned_vertical_distance * (1 + build_percentage / 100.0)).round(-1)
       assert_equal expected_vertical_distance, current_week.planned_vertical_distance
-      expected_duration = (previous_week.planned_duration * (1 + (Plan::MAX_PROGRESSION_PERCENTAGE - plan.vertical_build_percentage) / 100.0)).round
+      expected_duration = (previous_week.planned_duration * (1 + (Plan::MAX_PROGRESSION_PERCENTAGE - build_percentage) / 100.0)).round
       assert_equal expected_duration, current_week.planned_duration
     end
   end
