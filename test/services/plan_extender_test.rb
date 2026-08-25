@@ -96,4 +96,30 @@ class PlanExtenderTest < ActiveSupport::TestCase
     assert_equal original_end_date, @plan.reload.end_date
     assert_equal original_week_count, @plan.weeks.count
   end
+
+  test "preview returns projected weeks without changing the plan" do
+    original_end_date = @plan.end_date
+    original_week_count = @plan.weeks.count
+
+    preview = PlanExtender.new(@plan, @target_end_date).preview
+
+    assert_equal original_end_date, preview[:current_end_date]
+    assert_operator preview[:projected_end_date], :>=, @target_end_date
+    assert_operator preview[:weeks_to_add].count, :>, 0
+    assert_equal original_week_count, @plan.reload.weeks.count
+    assert_equal original_end_date, @plan.end_date
+    assert preview[:weeks_to_add].all? { |week| week.key?(:week_number) && week.key?(:category) }
+  end
+
+  test "preview matches what call actually persists" do
+    preview = PlanExtender.new(@plan, @target_end_date).preview
+
+    result = PlanExtender.new(@plan, @target_end_date).call
+    assert result.success?
+
+    persisted_weeks = @plan.weeks.where("week_number > ?", @plan.weeks.count - preview[:weeks_to_add].count).order(:week_number)
+
+    assert_equal preview[:weeks_to_add].map { |w| w[:week_number] }, persisted_weeks.pluck(:week_number)
+    assert_equal preview[:projected_end_date], @plan.reload.end_date
+  end
 end

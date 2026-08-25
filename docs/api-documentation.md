@@ -598,12 +598,55 @@ Extends a dated plan to a new end date and regenerates its future weeks.
 | ---------- | ---- | -------- | -------------------------------------------------------------------------------------------------- |
 | `end_date` | date | yes      | Must be after the plan's current `end_date`. The plan must already have both a start and end date. |
 
+### Query parameters
+
+| Name      | Type   | Required | Default | Notes                                                                                                           |
+| --------- | ------ | -------- | ------- | --------------------------------------------------------------------------------------------------------------- |
+| `preview` | string | optional | none    | When present, validates the requested date and returns the weeks that would be added without changing the plan. |
+
 ### Behavior
 
+- Use `preview` before calling the extension without it to verify the requested `end_date` and inspect the projected weeks.
+- A preview does not delete existing weeks or update the plan.
 - Removes the existing taper and goal weeks before regenerating the plan.
 - Preserves the existing progression weeks and continues week numbering from the current plan.
 - Generates new weeks and days through the requested `end_date`.
 - Updates the plan's `end_date` to the end date of the last generated week. The final generated week may end after the requested date to preserve complete weeks.
+- Extending a plan cannot currently be reverted, so clients should preview the extension before applying it.
+
+### Preview request
+
+```bash
+curl -X PATCH "https://api.yourapp.com/api/v1/plans/42/extend?preview" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <auth_token>" \
+  -d '{
+    "end_date": "2026-12-21"
+  }'
+```
+
+### Preview response
+
+Status: `200 OK`
+
+The preview returns the current end date, the projected end date, and the weeks and days that would be added. No plan records are changed.
+
+```json
+{
+  "current_end_date": "2026-10-26",
+  "projected_end_date": "2026-12-27",
+  "weeks_to_add": [
+    {
+      "week_number": 13,
+      "category": "progression",
+      "start_date": "2026-10-27",
+      "end_date": "2026-11-02",
+      "planned_vertical_distance": 1900,
+      "planned_duration": 210
+    }
+  ]
+}
+```
 
 ### Example request
 
@@ -774,7 +817,7 @@ Status: `401 Unauthorized`
 }
 ```
 
-## 9. Error handling reference
+## 10. Error handling reference
 
 | HTTP Status                 | Meaning                                                                       |
 | --------------------------- | ----------------------------------------------------------------------------- |

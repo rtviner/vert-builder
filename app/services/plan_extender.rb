@@ -43,6 +43,27 @@ class PlanExtender
     result
   end
 
+  def preview
+    validate!
+
+    weeks_to_add = generate_new_weeks
+
+    {
+      current_end_date: plan.end_date,
+      projected_end_date: weeks_to_add.last&.end_date,
+      weeks_to_add: weeks_to_add.map do |week|
+        {
+          week_number: week.week_number,
+          category: week.category,
+          start_date: week.start_date,
+          end_date: week.end_date,
+          planned_vertical_distance: week.planned_vertical_distance,
+          planned_duration: week.planned_duration
+        }
+      end
+    }
+  end
+
   private
 
   attr_reader :plan, :target_end_date
@@ -59,7 +80,7 @@ class PlanExtender
 
   def generate_new_weeks
     existing_progression_weeks = plan.weeks.where(category: :progression).order(:week_number).to_a
-    resume_week_number = plan.weeks.maximum(:week_number) + 1
+    resume_week_number = existing_progression_weeks.last.week_number + 1
 
     WeekGenerator.new(
       plan,

@@ -64,6 +64,34 @@ class Api::V1::PlansControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
+  test "PATCH extend with preview does not persist changes" do
+    plan = plans(:user_two_active)
+    user = users(:two)
+    original_end_date = plan.end_date
+    original_week_count = plan.weeks.count
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: "2026-10-14", preview: "true" },
+      headers: auth_headers(user)
+
+    assert_response :success
+    plan.reload
+    assert_equal original_end_date, plan.end_date
+    assert_equal original_week_count, plan.weeks.count
+  end
+
+  test "PATCH extend with preview returns projected weeks and dates" do
+    plan = plans(:user_two_active)
+    user = users(:two)
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: "2026-10-14", preview: "true" },
+      headers: auth_headers(user)
+
+    body = JSON.parse(response.body)
+    assert body.key?("projected_end_date")
+    assert body.key?("weeks_to_add")
+    assert body["weeks_to_add"].is_a?(Array)
+  end
+
   test "PATCH extend returns a plan with the updated end date greater than or equal to the target end date" do
     plan = plans(:user_two_active)
     user = users(:two)
