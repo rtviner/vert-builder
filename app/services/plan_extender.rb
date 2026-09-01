@@ -25,8 +25,8 @@ class PlanExtender
         raise ActiveRecord::Rollback
       end
 
-      days_to_add = begin
-        weeks_to_add.flat_map { |week| DayGenerator.new.build_days(week, plan.goal_vertical_distance) }
+      begin
+        days_to_add = weeks_to_add.flat_map { |week| DayGenerator.new.build_days(week, plan.goal_vertical_distance) }
       rescue ArgumentError => e
         plan.errors.add(:base, "Day generation failed: #{e.message}")
         result = PlanResult.new(false, plan)
