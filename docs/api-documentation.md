@@ -606,13 +606,13 @@ Extends a dated plan to a new end date and regenerates its future weeks.
 
 ### Behavior
 
-- Use `preview` before calling the extension without it to verify the requested `end_date` and inspect the projected weeks.
-- A preview does not delete existing weeks or update the plan.
-- Removes the existing taper and goal weeks before regenerating the plan.
+- Removes the existing taper and goal weeks.
 - Preserves the existing progression weeks and continues week numbering from the current plan.
 - Generates new weeks and days through the requested `end_date`.
 - Updates the plan's `end_date` to the end date of the last generated week. The final generated week may end after the requested date to preserve complete weeks.
 - Extending a plan cannot currently be reverted, so clients should preview the extension before applying it.
+- Use `preview` to verify the requested `end_date` and inspect the projected weeks before the plan is modified.
+- Does not delete existing weeks or update the plan.
 
 ### Preview request
 
