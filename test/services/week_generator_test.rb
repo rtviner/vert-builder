@@ -22,6 +22,20 @@ class WeekGeneratorTest < ActiveSupport::TestCase
     WeekGenerator.new(plan)
   end
 
+  def progression_week(plan, week_number, start_date, planned_vertical_distance: 4000)
+    Week.new(
+      plan: plan,
+      week_number: week_number,
+      status: :planned,
+      planned_duration: 300,
+      planned_vertical_distance: planned_vertical_distance,
+      category: :progression,
+      vertical_build_percentage: 10,
+      start_date: start_date,
+      end_date: start_date + 6.days
+    )
+  end
+
   test "fails if baseline vertical distance is below minimum" do
     plan = build_plan(baseline_vertical_distance: 500)
     result = generator(plan).build_weeks
@@ -175,5 +189,65 @@ class WeekGeneratorTest < ActiveSupport::TestCase
       assert_nil week.start_date
       assert_nil week.end_date
     end
+  end
+
+  test "continues week numbering from the given starting week number without gaps" do
+    plan = build_plan(start_date: Date.new(2026, 1, 5))
+    starting_progression_weeks = [
+      progression_week(plan, 8, Date.new(2026, 2, 23)),
+      progression_week(plan, 9, Date.new(2026, 3, 2))
+    ]
+
+    weeks = WeekGenerator.new(
+      plan,
+      starting_week_number: 10,
+      starting_progression_weeks: starting_progression_weeks,
+      target_end_date: Date.new(2026, 4, 1)
+    ).build_weeks
+
+    week_numbers = weeks.map(&:week_number)
+    assert_equal (10..week_numbers.last).to_a, week_numbers
+  end
+
+  test "continues the recovery pattern from starting progression weeks" do
+    plan = build_plan(start_date: Date.new(2026, 1, 5), recovery_pattern: :every_fourth)
+    starting_progression_weeks = [
+      progression_week(plan, 2, Date.new(2026, 1, 12)),
+      progression_week(plan, 3, Date.new(2026, 1, 19))
+    ]
+
+    weeks = WeekGenerator.new(
+      plan,
+      starting_week_number: 4,
+      starting_progression_weeks: starting_progression_weeks,
+      target_end_date: Date.new(2026, 3, 15)
+    ).build_weeks
+
+    generated_training_weeks = weeks.reject { |week| week.category.in?(%w[taper goal]) }
+    generated_training_weeks.each do |week|
+      expected_category = (week.week_number % 4).zero? ? "recovery" : "progression"
+      assert_equal expected_category, week.category
+    end
+  end
+
+  test "stops after the target end date is reached and adds taper and goal weeks" do
+    plan = build_plan(start_date: Date.new(2026, 1, 5))
+    starting_progression_weeks = [
+      progression_week(plan, 2, Date.new(2026, 1, 12)),
+      progression_week(plan, 3, Date.new(2026, 1, 19))
+    ]
+    target_end_date = Date.new(2026, 3, 15)
+
+    weeks = WeekGenerator.new(
+      plan,
+      starting_week_number: 4,
+      starting_progression_weeks: starting_progression_weeks,
+      target_end_date: target_end_date
+    ).build_weeks
+
+    assert_operator weeks.last.end_date, :>=, target_end_date
+    assert_equal "taper", weeks[-2].category
+    assert_equal "goal", weeks.last.category
+    assert_equal weeks.last.week_number, weeks.map(&:week_number).max
   end
 end

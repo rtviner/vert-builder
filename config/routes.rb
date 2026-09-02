@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :plans, only: %i[create index show] do
         member do
           patch :activate
+          patch :extend
           get :export_csv
         end
       end

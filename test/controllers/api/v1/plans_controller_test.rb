@@ -64,6 +64,91 @@ class Api::V1::PlansControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
   end
 
+  test "PATCH extend with preview does not persist changes" do
+    plan = plans(:user_two_active)
+    user = users(:two)
+    original_end_date = plan.end_date
+    original_week_count = plan.weeks.count
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: "2026-10-14", preview: "true" },
+      headers: auth_headers(user)
+
+    assert_response :success
+    plan.reload
+    assert_equal original_end_date, plan.end_date
+    assert_equal original_week_count, plan.weeks.count
+  end
+
+  test "PATCH extend with preview returns projected weeks and dates" do
+    plan = plans(:user_two_active)
+    user = users(:two)
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: "2026-10-14", preview: "true" },
+      headers: auth_headers(user)
+
+    body = JSON.parse(response.body)
+    assert body.key?("projected_end_date")
+    assert body.key?("weeks_to_add")
+    assert body["weeks_to_add"].is_a?(Array)
+  end
+
+  test "PATCH extend returns a plan with the updated end date greater than or equal to the target end date" do
+    plan = plans(:user_two_active)
+    user = users(:two)
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: (plan.end_date + 2.weeks).to_s },
+      headers: auth_headers(user)
+
+    assert_response :success
+    body = JSON.parse(response.body)
+    assert (plan.end_date + 2.weeks).to_s <= body["end_date"]
+  end
+  test "PATCH extend returns 400 for a target date before the plan's current end_date" do
+    plan = plans(:user_two_active)
+    user = users(:two)
+    earlier_date = (plan.end_date - 30).to_s
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: earlier_date },
+      headers: auth_headers(user)
+
+    assert_response :bad_request
+  end
+
+  test "PATCH extend returns 400 for a malformed end_date" do
+    plan = plans(:user_two_active)
+    user = users(:two)
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: "not-a-date" },
+      headers: auth_headers(user)
+
+    assert_response :bad_request
+  end
+
+  test "PATCH extend returns 400 for a plan with no dates" do
+    plan = plans(:user_one_planned)
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: "2026-10-14" },
+      headers: auth_headers(@user)
+
+    assert_response :bad_request
+  end
+
+  test "PATCH extend returns 404 for another user's plan" do
+    other_users_plan = plans(:user_two_active)
+
+    patch extend_api_v1_plan_path(other_users_plan), params: { end_date: "2026-10-14" },
+      headers: auth_headers(@user)
+
+    assert_response :not_found
+  end
+
+  test "PATCH extend requires authentication" do
+    plan = plans(:user_one_active)
+
+    patch extend_api_v1_plan_path(plan), params: { end_date: "2026-10-14" }
+
+    assert_response :unauthorized
+  end
   test "CREATE creates a new plan for the current user" do
     assert_changes -> { Plan.count } do
       post api_v1_plans_url, params: {

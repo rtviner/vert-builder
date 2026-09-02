@@ -26,6 +26,25 @@ class Api::V1::PlansController < ApplicationController
     render json: { error: { status: 400, message: "Bad request", detail: e.message } }, status: :bad_request
   end
 
+  def extend
+    plan = Current.user.plans.find(params[:id])
+    target_end_date = Date.parse(params[:end_date])
+    extender = PlanExtender.new(plan, target_end_date)
+
+    if params[:preview].present?
+      render json: extender.preview, status: :ok
+    else
+      result = extender.call
+      if result.success?
+        render json: plan, status: :ok
+      else
+        render json: { errors: result.plan.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
+  rescue ArgumentError => e
+    render json: { error: { status: 400, message: "Bad request", detail: e.message } }, status: :bad_request
+  end
+
   def index
     plans = Current.user.plans
 

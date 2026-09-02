@@ -574,7 +574,153 @@ Status: `404 Not Found`
 }
 ```
 
-## 8. Export a plan as CSV
+## 8. Extend a plan
+
+Extends a dated plan to a new end date and regenerates its future weeks.
+
+### Endpoint
+
+- `PATCH /api/v1/plans/:id/extend`
+
+### Auth requirement
+
+- Requires authentication via `Authorization: Bearer <token>`.
+
+### Path parameter
+
+| Name | Type    | Required | Notes                             |
+| ---- | ------- | -------- | --------------------------------- |
+| `id` | integer | yes      | Plan record ID from the database. |
+
+### Request body
+
+| Field      | Type | Required | Notes                                                                                              |
+| ---------- | ---- | -------- | -------------------------------------------------------------------------------------------------- |
+| `end_date` | date | yes      | Must be after the plan's current `end_date`. The plan must already have both a start and end date. |
+
+### Query parameters
+
+| Name      | Type   | Required | Default | Notes                                                                                                           |
+| --------- | ------ | -------- | ------- | --------------------------------------------------------------------------------------------------------------- |
+| `preview` | string | optional | none    | When present, validates the requested date and returns the weeks that would be added without changing the plan. |
+
+### Behavior
+
+- Removes the existing taper and goal weeks.
+- Preserves the existing progression weeks and continues week numbering from the current plan.
+- Generates new weeks and days through the requested `end_date`.
+- Updates the plan's `end_date` to the end date of the last generated week. The final generated week may end after the requested date to preserve complete weeks.
+- Extending a plan cannot currently be reverted, so clients should preview the extension before applying it.
+- Use `preview` to verify the requested `end_date` and inspect the projected weeks before the plan is modified.
+- Does not delete existing weeks or update the plan.
+
+### Preview request
+
+```bash
+curl -X PATCH "https://api.yourapp.com/api/v1/plans/42/extend?preview" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <auth_token>" \
+  -d '{
+    "end_date": "2026-12-21"
+  }'
+```
+
+### Preview response
+
+Status: `200 OK`
+
+The preview returns the current end date, the projected end date, and the weeks and days that would be added. No plan records are changed.
+
+```json
+{
+  "current_end_date": "2026-10-26",
+  "projected_end_date": "2026-12-27",
+  "weeks_to_add": [
+    {
+      "week_number": 13,
+      "category": "progression",
+      "start_date": "2026-10-27",
+      "end_date": "2026-11-02",
+      "planned_vertical_distance": 1900,
+      "planned_duration": 210
+    }
+  ]
+}
+```
+
+### Example request
+
+```bash
+curl -X PATCH https://api.yourapp.com/api/v1/plans/42/extend \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <auth_token>" \
+  -d '{
+    "end_date": "2026-12-21"
+  }'
+```
+
+### Example success response
+
+Status: `200 OK`
+
+```json
+{
+  "id": 42,
+  "status": "active",
+  "recovery_pattern": "every_fourth",
+  "baseline_vertical_distance": 1624,
+  "goal_vertical_distance": 3300,
+  "vertical_build_percentage": 10,
+  "start_date": "2026-08-03",
+  "end_date": "2026-12-27"
+}
+```
+
+### Example error responses
+
+- Plan has no dates:
+
+Status: `400 Bad Request`
+
+```json
+{
+  "error": {
+    "status": 400,
+    "message": "Bad request",
+    "detail": "plan has no dates to extend from"
+  }
+}
+```
+
+- Requested end date is not after the current end date:
+
+Status: `400 Bad Request`
+
+```json
+{
+  "error": {
+    "status": 400,
+    "message": "Bad request",
+    "detail": "target_end_date must be after the plan's current end_date"
+  }
+}
+```
+
+- Plan not found or not owned by user:
+
+Status: `404 Not Found`
+
+```json
+{
+  "error": {
+    "status": 404,
+    "message": "Resource not found",
+    "detail": "Couldn't find Plan"
+  }
+}
+```
+
+## 9. Export a plan as CSV
 
 ### Endpoint
 
@@ -671,7 +817,7 @@ Status: `401 Unauthorized`
 }
 ```
 
-## 9. Error handling reference
+## 10. Error handling reference
 
 | HTTP Status                 | Meaning                                                                       |
 | --------------------------- | ----------------------------------------------------------------------------- |
