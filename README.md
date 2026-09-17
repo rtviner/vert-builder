@@ -35,7 +35,11 @@ VertBuilder is a Rails API backend for building fitness plans. It provides:
    code .
    ```
 2. Reopen in container: Press F1 and select Dev Containers: Reopen in Container.
-   VS Code will build the container, run initial setup scripts, and start the server automatically.
+   VS Code will build the container and run initial setup scripts
+3. Start the server: 
+   ```bash
+   bin/rails server
+   ```
 
 ### Option B: Terminal Setup (Using just)
 
